@@ -1,0 +1,19 @@
+token
+user:{
+	name,
+	emailAddress,
+	phone,
+	balance
+}
+dept:{
+	student:{id, name}
+	amount
+}
+transactionHistory:[
+	{
+		id,
+		time,
+		student:{id, name}
+		amount
+	}
+]
