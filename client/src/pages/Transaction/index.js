@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-const Payment = (props) =>{
+const Transaction = (props) =>{
     return(
         <div>
             <div class="container my-3">
@@ -62,4 +62,4 @@ const Payment = (props) =>{
         </div>
     )
 }
-export default Payment
+export default Transaction
