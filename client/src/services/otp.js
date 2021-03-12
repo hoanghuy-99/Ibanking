@@ -6,6 +6,6 @@ async function requestNewOTP(){
         },
         body: ''
     })
-    return response.json()
+    return await response.json()
 }
 export{requestNewOTP}

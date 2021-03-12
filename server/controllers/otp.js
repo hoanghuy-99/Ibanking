@@ -1,0 +1,5 @@
+
+
+function sendOtp(req, res){
+    
+}

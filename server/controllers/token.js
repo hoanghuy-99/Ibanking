@@ -1,0 +1,5 @@
+
+
+function createToken(req, res) {
+    
+}

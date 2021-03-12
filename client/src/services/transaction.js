@@ -17,6 +17,6 @@ async function requestNewTransaction(debt_id,otp){
         },
         body: JSON.stringify(data)
     })
-    return response.json()
+    return await response.json()
 }
 export{requestTransaction,requestNewTransaction}
