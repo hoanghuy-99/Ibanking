@@ -50,7 +50,7 @@ function makeTransaction(otp){
         }
     }
     return async (dispatch, getState) =>{
-        const state = getState()
+        dispatch(request())
         const res = requestNewTransaction(state.debt.data.id,otp)
         if(res.code === 0){
             dispatch(success(res.data,"Successfully"))
