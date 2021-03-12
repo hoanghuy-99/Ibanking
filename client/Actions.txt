@@ -5,3 +5,5 @@ sendOtp()
 makePayment(otp)
 fetchDepts()
 fetchPayments()
+
+checkTokenFromCookie()
