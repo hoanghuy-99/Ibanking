@@ -53,18 +53,19 @@ const fetchUser = () => {
         }
     }
 }
+
 function login(username, password){
     function request(){
         return {type: userConstants.LOGIN}
     }
-    function success(){
+    function success(tokens,message){
         return {
             type: userConstants.LOGIN_SUCCESS,
             tokens,
             message
         }
     }
-    function failure(){
+    function failure(message){
         return{
             type: userConstants.LOGIN_FAILURE,
             message
@@ -79,9 +80,14 @@ function login(username, password){
         }
         else
         {
-            dispatch(failure('Login Fail'))
+            dispatch(failure('Username or Password is wrong'))
         }
     }
 }
 
-export { fetchUser, login }
+function logout(){
+    return{
+        type: userConstants.LOGOUT
+    }
+}
+export { fetchUser, login ,logout}
