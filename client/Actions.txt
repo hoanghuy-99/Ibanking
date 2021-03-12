@@ -3,7 +3,7 @@ logout()
 fetchUser()
 sendOtp()
 makeTransaction(otp)
-fetchDepts()
+fetchDebtByStudentId(student_id)
 fetchTransactions()
 
 checkTokenFromCookie()
