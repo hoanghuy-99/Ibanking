@@ -4,20 +4,22 @@ function fetchTransactions(){
     function request(){
         return {type: TransactionConstants.FETCH_TRANSACTION}
     }
-    function success(history,message){
+
+    function success(history, message) {
         return {
             type: TransactionConstants.FETCH_TRANSACTION_SUCCESS,
             history,
             message
         }
     }
-    function failure(message){
-        return{
+
+    function failure(message) {
+        return {
             type: TransactionConstants.FETCH_TRANSACTION_FAILURE,
             message
         }
     }
-    return async (dispatch)=>{
+    return async(dispatch) => {
         dispatch(request())
         const res = await requestTransaction()
         if(res.code === 0){
