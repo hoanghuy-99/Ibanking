@@ -1,11 +1,10 @@
 import TransactionConstants from "../constants/transaction.js"
 
 const initialState = {
-    loggedIn: false,
     requesting: false,
     message: undefined,
     history: undefined,
-    tokens: undefined,
+    info_pay: undefined,
 }
  export default (state = initialState, action)=> {
     switch(action.type){
@@ -27,6 +26,25 @@ const initialState = {
                 requesting:false,
                 history:undefined,
                 message: action.message
+            }
+        case TransactionConstants.MAKE_TRANSACTION:
+            return{
+                ...state,
+                requesting: true,
+            }
+        case TransactionConstants.MAKE_TRANSACTION_SUCCESS:
+            return{
+                ...state,
+                requesting: false,
+                info_pay: action.info_pay,
+                message
+            }
+        case TransactionConstants.MAKE_TRANSACTION:
+            return{
+                ...state,
+                requesting: false,
+                info_pay: undefined,
+                message
             }
         default:
             return state
