@@ -7,6 +7,6 @@ async function requestToken(username,password){
         },
         body: JSON.stringify(data),
     })
-    return response.json()
+    return await response.json()
 }
 export{requestToken}

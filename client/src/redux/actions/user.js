@@ -12,7 +12,14 @@ function requestUserById()
         }
     }
 }
-
+function requestToken(username,password){
+    return{
+        code: 0,
+        data:{
+            token: "JHGA76aahsd6438"
+        }
+    }
+}
 const fetchUser = () => {
     function request(){
         return { type: userConstants.FETCH_USER }
@@ -46,5 +53,35 @@ const fetchUser = () => {
         }
     }
 }
+function login(username, password){
+    function request(){
+        return {type: userConstants.LOGIN}
+    }
+    function success(){
+        return {
+            type: userConstants.LOGIN_SUCCESS,
+            tokens,
+            message
+        }
+    }
+    function failure(){
+        return{
+            type: userConstants.LOGIN_FAILURE,
+            message
+        }
+    }
+    return async (dispatch) =>{
+        dispatch(request())
+        const res = await requestToken(username,password)
+        if(res.code === 0)
+        {
+            dispatch(success(res.data,'Login Success'))
+        }
+        else
+        {
+            dispatch(failure('Login Fail'))
+        }
+    }
+}
 
-export { fetchUser }
+export { fetchUser, login }

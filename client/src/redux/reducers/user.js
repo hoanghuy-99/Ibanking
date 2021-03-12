@@ -5,6 +5,7 @@ const initialState = {
     requesting: false,
     message: undefined,
     profile: undefined,
+    tokens: undefined,
 }
 
 export default (state = initialState, action) => {
@@ -26,6 +27,25 @@ export default (state = initialState, action) => {
                 ...state,
                 requesting: false,
                 profile: undefined,
+                message: action.message
+            }
+        case userConstants.LOGIN:
+            return{
+                ...state,
+                loggedIn: true
+            }
+        case userConstants.LOGIN_SUCCESS:
+            return{
+                ...state,
+                loggedIn: true,
+                tokens: action.token,
+                message: action.message
+            }
+        case userConstants.LOGIN_FAILURE:
+            return{
+                ...state,
+                loggedIn: false,
+                tokens: undefined,
                 message: action.message
             }
         default:
