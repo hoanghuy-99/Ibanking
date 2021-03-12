@@ -1,5 +1,5 @@
-async function requestDebt(){
-    const response = await fetch("api/debts",{
+async function requestDebt(student_id){
+    const response = await fetch("api/debts?student_id="+student_id,{
         method: "GET",
         headers: {
             'Content-Type': 'application/json',

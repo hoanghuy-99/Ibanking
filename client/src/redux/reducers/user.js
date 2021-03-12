@@ -32,21 +32,30 @@ export default (state = initialState, action) => {
         case userConstants.LOGIN:
             return{
                 ...state,
-                loggedIn: true
+                loggedIn: true,
+                requesting: true
             }
         case userConstants.LOGIN_SUCCESS:
             return{
                 ...state,
                 loggedIn: true,
-                tokens: action.token,
+                requesting: false,
+                tokens: action.tokens,
                 message: action.message
             }
         case userConstants.LOGIN_FAILURE:
             return{
                 ...state,
                 loggedIn: false,
+                requesting: false,
                 tokens: undefined,
                 message: action.message
+            }
+        case userConstants.LOGOUT:
+            return{
+                ...state,
+                loggedIn:false,
+                tokens:undefined
             }
         default:
             return state
