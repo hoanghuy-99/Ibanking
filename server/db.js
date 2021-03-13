@@ -1,5 +1,5 @@
+require('dotenv').config()
 const mongoose = require('mongoose');
-require('dotenv').config
 
 const connectDatabase = async () =>{
     await mongoose.connect(
@@ -10,7 +10,7 @@ const connectDatabase = async () =>{
             useCreateIndex: true,
         }
     )
-    console.log('DB connected.')
+    console.log('Database connected.')
     mongoose.Promise = global.Promise; // Tell Mongoose to use ES6 promises
     mongoose.connection.on('error', (err) => {
         console.error(err.message);

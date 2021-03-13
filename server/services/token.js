@@ -1,8 +1,12 @@
 
-function createToken(username, password){
 
-}
 
-function checkToken(token){
+class TokenService{
+    static create(username, password){
 
+    }
+    
+    static check(token){
+    
+    }
 }

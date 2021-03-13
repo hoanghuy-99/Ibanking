@@ -1,7 +1,12 @@
 
 
-function sendNewOtpToEmailAddress(email_address) {
+class OtpService{
     
-}
+    static create() {
+        
+    }
 
-function checkOtp(otp, user_id)
+    static check(otp, user_id){
+
+    }
+}
