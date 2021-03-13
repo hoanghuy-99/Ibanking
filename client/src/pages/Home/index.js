@@ -3,8 +3,8 @@ const Home = (props) =>{
     return(
         <div>
             <div>
-                <div className="container-fluid">
-                    <div className="row">
+                <div className="container" style={{marginTop:"100px",textAlign:"center"}}>
+                    <div className="row" style={{display:"inline-flex"}}>
                         <div className="col-6">
                             <div className="card" style={{width:"18rem"}}>
                                 <img src="transfer.jpeg" class="card-img-top"/>

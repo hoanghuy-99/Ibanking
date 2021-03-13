@@ -4,7 +4,7 @@ const Transaction = (props) =>{
         <div>
             <div className="container my-3">
                 <div className="row justify-content-center">
-                    <div className="col-xl-8 border mt-3 pt-3 rounded mx-3">
+                    <div className="background col-xl-8 border mt-3 pt-3 rounded mx-3">
                         <form action="" method="POST">
                             <div>
                                 <h4>Người nộp tiền</h4>
