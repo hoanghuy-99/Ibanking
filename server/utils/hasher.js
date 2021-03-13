@@ -1,8 +1,14 @@
+const bcrypt = require('bcrypt')
 
-function hash(text) {
-    
+async function hash(text) {
+    return await bcrypt.hash(text, 12)
 }
 
-function compare(text, hashed_text){
-    
+async function compare(text, hashed_text){
+    return await bcrypt.compare(text, hashed_text)
+}
+
+module.exports = {
+    hash,
+    compare
 }
