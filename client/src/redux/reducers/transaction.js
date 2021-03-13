@@ -39,7 +39,7 @@ const initialState = {
                 info_pay: action.info_pay,
                 message
             }
-        case TransactionConstants.MAKE_TRANSACTION:
+        case TransactionConstants.MAKE_TRANSACTION_FAILURE:
             return{
                 ...state,
                 requesting: false,
