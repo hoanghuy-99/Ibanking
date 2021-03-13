@@ -7,7 +7,7 @@ function requestUserById()
         data: {
             name: 'Kiet',
             phone: '908908908',
-            emailAddress: 'kiet@gamil.com',
+            emailAddress: 'kiet@gmail.com',
             balance: 100000000000
         }
     }
