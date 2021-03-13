@@ -1,5 +1,9 @@
 
 
-function getDebtByStudentId(stundent_id) {
+class DebtService{
+    static getByStudentId(stundent_id) {
     
+    }
 }
+
+module.exports = DebtService
