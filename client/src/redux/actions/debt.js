@@ -1,17 +1,5 @@
 import DebtConstansts from "../constants/debt.js"
-function requestDebt(student_id){
-    return {
-        code: 0,
-        data: {
-            id: "98901",
-            student: {
-                name: "Nguyen Van A",
-                id: "51702125"
-            },
-            amount: 3450000
-        }
-    }
-}
+import {requestDebt} from '../../services/debt.js'
 function fetchDebtByStudentId(student_id){
     function request(){
         return {type:DebtConstansts.FETCH_DEBT}

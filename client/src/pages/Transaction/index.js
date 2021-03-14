@@ -1,59 +1,80 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
+import {useSelector,useDispatch} from 'react-redux'
+import {fetchDebtByStudentId} from '../../redux/actions/debt.js'
 const Transaction = (props) =>{
+    const profile = useSelector(state => state.user?.profile)
+    const debt = useSelector(state => state.debt?.data)
+    const dispatch = useDispatch()
+    const [id,setId] = useState("") 
+    const checkStudentId = ()=>{
+        if(id.length != 8 || debt?.student.id != id){
+            return ""
+        }
+        return true
+    }
+    const handleChange = (e)=>{
+        const student_id = e.target.value
+        if(student_id.length == 8 && debt?.student.id != student_id){
+            dispatch(fetchDebtByStudentId(student_id))
+        }
+        setId(student_id)
+    }
     return(
         <div>
-            <div class="container my-3">
-                <div class="row justify-content-center">
-                    <div class="col-xl-8 border mt-3 pt-3 rounded mx-3">
+            <div className="container my-3">
+                <div className="row justify-content-center">
+                    <div className="background col-xl-8 border mt-3 pt-3 rounded mx-3">
                         <form action="" method="POST">
                             <div>
                                 <h4>Người nộp tiền</h4>
-                                <div class="form-group">
+                                <div className="form-group">
                                     <label for="user">Họ tên</label>
-                                    <input class="form-control" type="text"  id="name" name="name" disabled/>
+                                    <input className="form-control" type="text"  id="name" name="name" value={profile&&profile.name} disabled/>
                                 </div>
-                                <div class="form-group">
+                                <div className="form-group">
                                     <label for="std">Số điện thoại</label>
-                                    <input class="form-control" type="text" id="sdt" name="sdt" disabled/>
+                                    <input className="form-control" type="text" id="sdt" name="sdt" value={profile&&profile.phone} disabled/>
                                 </div>
-                                <div class="form-group">
+                                <div className="form-group">
                                     <label for="email">Email</label>
-                                    <input class="form-control" type="text" id="email" name="email" disabled/>
+                                    <input className="form-control" type="text" id="email" name="email" value={profile&&profile.emailAddress} disabled/>
                                 </div>
                             </div>
-                            <div class="my-3">
+                            <div className="my-3">
                                 <h4>Thông tin học phí</h4>
-                                <div class="form-group">
+                                <div className="form-group">
                                     <label for="mssv">Mã số sinh viên</label>
-                                    <input class="form-control" type="text"  placeholder="Nhập MSSV" id="mssv" name="mssv"/>
+                                    <input className="form-control" type="text"  placeholder="Nhập MSSV" id="mssv" name="mssv" onChange={handleChange}/>
                                 </div>
-                                <div class="form-group">
+                                <div className="form-group">
                                     <label for="hoten">Họ và tên sinh viên</label>
-                                    <input class="form-control" type="text"  id="name_sv" name="name_sv" disabled/>
+                                    <input className="form-control" type="text"  id="name_sv" name="name_sv" value={checkStudentId()&&debt&&debt.student.name} disabled/>
                                 </div>
-                                <div class="form-group">
+                                <div className="form-group">
                                     <label for="user">Số tiền cần nộp</label>
-                                    <input class="form-control" type="text" id="money" name="money" value="VND" disabled/>
+                                    <input className="form-control" type="text" id="money" name="money" value="VND" value={checkStudentId()&&debt&&debt.amount} disabled/>
                                 </div>
                             </div>
-                            <div class="my-3">
+                            <div className="my-3">
                                 <h4>Thông tin thanh toán</h4>
-                                <div class="form-group">
+                                <div className="form-group">
                                     <label for="sodu">Số dư tài khỏan</label>
-                                    <input class="form-control" type="text"  id="sodu" name="sodu" disabled/>
+                                    <input className="form-control" type="text"  id="sodu" name="sodu" value={profile&&profile.balance} disabled/>
                                 </div>
-                                <div class="form-group">
+                                <div className="form-group">
                                     <label for="tiennop">Số tiền cần nộp</label>
-                                    <input class="form-control" type="text"  id="tiennop" name="tiennop" disabled/>
+                                    <input className="form-control" type="text"  id="tiennop" name="tiennop" value={debt&&debt.amount} disabled/>
                                 </div>
-                                <div class="form-group">
+                                <div className="form-group">
                                     <label for="user">Thỏa thuận&Điều khoản</label>
-                                    <textarea class="form-control" name="desciption" id="desciption" cols="30" rows="10" disabled></textarea>
+                                    <textarea className="form-control" name="desciption" id="desciption" cols="30" rows="10" disabled>
+                                       {`- Điều 1: Phải thực hiện đúng hạn thanh toán học phí.\n- Điều 2: Không chịu trách nhiệm cho việc thanh toán nhầm cho sinh viên khác, nên kiểm tra kỹ trước khi giao dịch.\n- Điều 3: Không để người khác biết mã giao dịch của bạn!`}
+                                    </textarea>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <button class="btn btn-dark mr-2" with>Hủy</button>
-                                <button class="btn btn-danger mr-2">Thanh toán</button>
+                            <div className="form-group">
+                                <button className="btn btn-dark m-1" with>Hủy</button>
+                                <button className="btn btn-danger m-1">Thanh toán</button>
                             </div>
                         </form>
                     </div>

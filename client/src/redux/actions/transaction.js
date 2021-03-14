@@ -21,13 +21,13 @@ function fetchTransactions(){
     }
     return async(dispatch) => {
         dispatch(request())
-        const res = await requestTransaction()
+        /*const res = await requestTransaction()
         if(res.code === 0){
             dispatch(success(res.data,'Load data successfully'))
         }
         else{
             dispatch(failure('Fail to load data'))
-        }
+        }*/
         
     }
 }
@@ -51,13 +51,14 @@ function makeTransaction(otp){
     }
     return async (dispatch, getState) =>{
         dispatch(request())
-        const res = requestNewTransaction(state.debt.data.id,otp)
-        if(res.code === 0){
-            dispatch(success(res.data,"Successfully"))
-        }
-        else{
-            dispatch(failure("Can't make transaction"))
-        }
+        const state = getState()
+        // const res = requestNewTransaction(state.debt.data.id,otp)
+        // if(res.code === 0){
+        //     dispatch(success(res.data,"Successfully"))
+        // }
+        // else{
+        //     dispatch(failure("Can't make transaction"))
+        // }
     }
 }
 export {fetchTransactions, makeTransaction}
