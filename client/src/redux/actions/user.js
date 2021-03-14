@@ -1,17 +1,5 @@
 import userConstants from '../constants/user'
-
-function requestUserById()
-{
-    return { 
-        code: 0,
-        data: {
-            name: 'Kiet',
-            phone: '908908908',
-            emailAddress: 'kiet@gmail.com',
-            balance: 100000000000
-        }
-    }
-}
+import {requestUserById} from '../../services/user.js'
 function requestToken(username,password){
     return{
         code: 0,
@@ -42,7 +30,7 @@ const fetchUser = () => {
 
     return async (dispatch) => {
         dispatch(request())
-        const res = await requestUserById()
+        const res = await requestUserById("604e07079d803c289c3fff05")
         if(res.code === 0)
         {
             dispatch(success(res.data, 'Success'))  

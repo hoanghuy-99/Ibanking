@@ -1,8 +1,8 @@
-
+const DebtModel = require('../models/Debt.js')
 
 class DebtService{
-    static getByStudentId(stundent_id) {
-    
+    static async getByStudentId(student_id) {
+        return await DebtModel.findOne({"student.id":student_id})
     }
 }
 

@@ -14,14 +14,22 @@ async function fakeData()
     mongoose.deleteModel('Transaction')
 
     const user = new User({
-        _id: new mongoose.Types.ObjectId(1),
+        _id: new mongoose.Types.ObjectId(),
         name:'Kiet',
-        email:'Kiet@gmail.com',
+        emailAddress:'Kiet@gmail.com',
         phone:'0909123456',
         balance: 10000000000
     })
+    const debt = new Debt({
+        _id: new mongoose.Types.ObjectId(),
+        student:{
+            id: "51702125",
+            name:"Đoàn Tuấn Kiệt"
+        },
+        amount: 6969696969
 
-    const docs = [user]
+    })
+    const docs = [user,debt]
     docs.forEach((doc)=>{
         doc.save()
     })

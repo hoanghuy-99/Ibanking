@@ -24,7 +24,7 @@ const Transaction = (props) =>{
             <div className="container my-3">
                 <div className="row justify-content-center">
                     <div className="background col-xl-8 border mt-3 pt-3 rounded mx-3">
-                        <form action="" method="POST">
+                        <form >
                             <div>
                                 <h4>Người nộp tiền</h4>
                                 <div className="form-group">
@@ -44,39 +44,39 @@ const Transaction = (props) =>{
                                 <h4>Thông tin học phí</h4>
                                 <div className="form-group">
                                     <label for="mssv">Mã số sinh viên</label>
-                                    <input className="form-control" type="text"  placeholder="Nhập MSSV" id="mssv" name="mssv" onChange={handleChange}/>
+                                    <input className="form-control" type="text"  placeholder="Nhập MSSV" id="mssv"  onChange={handleChange}/>
                                 </div>
                                 <div className="form-group">
                                     <label for="hoten">Họ và tên sinh viên</label>
-                                    <input className="form-control" type="text"  id="name_sv" name="name_sv" value={checkStudentId()&&debt&&debt.student.name} disabled/>
+                                    <input className="form-control" type="text"  id="name_sv"  value={checkStudentId()&&debt&&debt.student.name} disabled/>
                                 </div>
                                 <div className="form-group">
                                     <label for="user">Số tiền cần nộp</label>
-                                    <input className="form-control" type="text" id="money" name="money" value="VND" value={checkStudentId()&&debt&&debt.amount} disabled/>
+                                    <input className="form-control" type="text" id="money" value="VND" value={checkStudentId()&&debt&&debt.amount} disabled/>
                                 </div>
                             </div>
                             <div className="my-3">
                                 <h4>Thông tin thanh toán</h4>
                                 <div className="form-group">
                                     <label for="sodu">Số dư tài khỏan</label>
-                                    <input className="form-control" type="text"  id="sodu" name="sodu" value={profile&&profile.balance} disabled/>
+                                    <input className="form-control" type="text"  id="sodu" value={profile&&profile.balance} disabled/>
                                 </div>
                                 <div className="form-group">
                                     <label for="tiennop">Số tiền cần nộp</label>
-                                    <input className="form-control" type="text"  id="tiennop" name="tiennop" value={debt&&debt.amount} disabled/>
+                                    <input className="form-control" type="text"  id="tiennop"  value={checkStudentId()&&debt&&debt.amount} disabled/>
                                 </div>
                                 <div className="form-group">
                                     <label for="user">Thỏa thuận&Điều khoản</label>
-                                    <textarea className="form-control" name="desciption" id="desciption" cols="30" rows="10" disabled>
+                                    <textarea className="form-control"  id="desciption" cols="30" rows="10" disabled>
                                        {`- Điều 1: Phải thực hiện đúng hạn thanh toán học phí.\n- Điều 2: Không chịu trách nhiệm cho việc thanh toán nhầm cho sinh viên khác, nên kiểm tra kỹ trước khi giao dịch.\n- Điều 3: Không để người khác biết mã giao dịch của bạn!`}
                                     </textarea>
                                 </div>
                             </div>
-                            <div className="form-group">
+                        </form>
+                        <div className="form-group">
                                 <button className="btn btn-dark m-1" with>Hủy</button>
                                 <button className="btn btn-danger m-1">Thanh toán</button>
-                            </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>

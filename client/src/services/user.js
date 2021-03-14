@@ -1,11 +1,9 @@
 async function requestUserById(id){
-    const response = await fetch("api/user/"+id,{
+    const response = await fetch("http://localhost:8080/api/user/"+id,{
         method: "GET",
-        headers: {
-            'Content-Type': 'application/json',
-        },
     })
-    get_user = await response.json()
+    const get_user = await response.json()
+    
     return get_user
 }
-export{requestUserById} 
+export{requestUserById}
