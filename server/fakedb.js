@@ -9,9 +9,10 @@ const Transaction = require('./models/Transaction.js')
 async function fakeData()
 {
     await connectDatabase()
-    mongoose.deleteModel('User')
-    mongoose.deleteModel('Debt')
-    mongoose.deleteModel('Transaction')
+    await User.deleteMany()
+    await Debt.deleteMany()
+    await Transaction.deleteMany()
+
 
     const user = new User({
         _id: new mongoose.Types.ObjectId(),
@@ -27,13 +28,21 @@ async function fakeData()
             name:"Đoàn Tuấn Kiệt"
         },
         amount: 6969696969
+    })
 
-    })
-    const docs = [user,debt]
-    docs.forEach((doc)=>{
-        doc.save()
-    })
+    const docs = [user, debt]
+    for(let i = 0; i < docs.length; i++ )
+    {   
+        await docs[i].save()
+    }
+    let u = await Debt.findOne({'student.id':'51702125'})
+    console.log(u)
 }
 fakeData().then(()=>{
-    console.log('Done')
+    console.log('Fake data were created')
+}).catch(error => {
+    console.log(error)
+    
+}).finally(()=>{
+    mongoose.connection.close()
 })
