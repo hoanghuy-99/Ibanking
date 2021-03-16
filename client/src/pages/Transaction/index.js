@@ -115,7 +115,7 @@ const Transaction = (props) =>{
 
                                 <h2>Xác nhận thông tin chuyển khoản</h2>
                                 <div>MSSV: <strong>{checkStudentId()&&id}</strong></div>
-                                <div>Họ và tên: <strong>{checkStudentId()&&profile&&profile.name}</strong></div>
+                                <div>Họ và tên: <strong>{checkStudentId()&&debt&&debt.student.name}</strong></div>
                                 <div>Số dư tài khoản: <strong>{checkStudentId()&&profile&&profile.balance}</strong></div>
                                 <div>Số tiền cần nộp: <strong style={{color:"red"}}>{checkStudentId()&&debt&&debt.amount}</strong></div>
                                 <div>Số tiền còn trong tài khoản: <strong>{checkStudentId()&&checkSodu()}</strong></div>

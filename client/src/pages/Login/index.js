@@ -1,15 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import { login } from '../../redux/actions/user'
-
+import { Link } from 'react-router-dom';
 class Login extends React.Component {
-    state_username = {
-        username = ''
-    }
 
-    state_password = {
-        password = ''
-    }
 
     handleChange = event => {
         this.setState({
