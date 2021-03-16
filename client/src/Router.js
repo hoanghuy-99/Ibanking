@@ -6,6 +6,7 @@ import Home from "./pages/Home/index.js"
 import Login from "./pages/Login/index.js"
 import History from "./pages/History/index.js"
 import OTP from "./pages/OTP/index.js"
+
 const Router = () => {
     return (
         <BrowserRouter>

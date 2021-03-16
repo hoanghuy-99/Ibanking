@@ -38,7 +38,7 @@ class Login extends React.Component {
                         <input type="password" className="form-control" name="password"
                         value={this.state.password} onChange={this.handleChange} placeholder="Password"/>
                     </div>
-                    <button type="submit" className="btn btn-primary">Login</button> 
+                    <Link to="/home"><button type="submit" className="btn btn-primary">Login</button></Link>
                     <br/>
                     <br/>
                 </form>

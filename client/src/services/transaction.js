@@ -5,7 +5,7 @@ async function requestTransaction(){
             'Content-Type': 'application/json',
         },
     })
-    get_transaction = await response.json()
+    const get_transaction = await response.json()
     return get_transaction
 }
 async function requestNewTransaction(debt_id,otp){

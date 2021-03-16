@@ -1,5 +1,6 @@
 import TransactionConstants from "../constants/transaction.js"
-
+import {setUserBalance} from "../actions/user.js"
+import {requestNewTransaction} from "../../services/transaction.js"
 function fetchTransactions(){
     function request(){
         return {type: TransactionConstants.FETCH_TRANSACTION}
@@ -52,13 +53,14 @@ function makeTransaction(otp){
     return async (dispatch, getState) =>{
         dispatch(request())
         const state = getState()
-        // const res = requestNewTransaction(state.debt.data.id,otp)
-        // if(res.code === 0){
-        //     dispatch(success(res.data,"Successfully"))
-        // }
-        // else{
-        //     dispatch(failure("Can't make transaction"))
-        // }
+        const res = requestNewTransaction(state.debt.data.id,otp)
+        if(res.code === 0){
+            dispatch(setUserBalance(res.data.user.balance))
+            dispatch(success(res.data,"Successfully"))
+        }
+        else{
+            dispatch(failure("Can't make transaction"))
+        }
     }
 }
 export {fetchTransactions, makeTransaction}

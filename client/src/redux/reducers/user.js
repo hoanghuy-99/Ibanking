@@ -57,6 +57,14 @@ export default (state = initialState, action) => {
                 loggedIn:false,
                 tokens:undefined
             }
+        case userConstants.SET_USER_BALANCE:
+            return{
+                ...state,
+                profile:{
+                    ...state.profile,
+                    balance: action.balance
+                }
+            }
         default:
             return state
     }

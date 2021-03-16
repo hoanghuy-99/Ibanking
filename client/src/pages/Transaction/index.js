@@ -1,5 +1,6 @@
 import React, {useState,useEffect} from 'react';
 import {useSelector,useDispatch} from 'react-redux'
+import Modal from 'react-modal';
 import { Link } from 'react-router-dom';
 import {fetchDebtByStudentId} from '../../redux/actions/debt.js'
 
@@ -20,6 +21,31 @@ const Transaction = (props) =>{
             dispatch(fetchDebtByStudentId(student_id))
         }
         setId(student_id)
+    }
+    const checkSodu=()=>{
+        if(profile?.balance !=0 && debt?.amount !=0){
+            return profile?.balance - debt?.amount
+        }
+        return "Không có dữ liệu"
+    }
+    const customStyles = {
+        content : {
+          width                 : '50%',
+          top                   : '50%',
+          left                  : '50%',
+          right                 : 'auto',
+          bottom                : 'auto',
+          marginRight           : '-50%',
+          transform             : 'translate(-50%, -50%)',
+          borderRadius          : '10px',
+        }
+      };
+    const [modalIsOpen,setIsOpen] = useState(false)
+    function closeModal(){
+        setIsOpen(false);
+    }
+    function OpenModal(){
+        setIsOpen(true)
     }
     return(
         <div>
@@ -76,8 +102,26 @@ const Transaction = (props) =>{
                             </div>
                         </form>
                         <div className="form-group">
-                                <button className="btn btn-dark m-1" with>Hủy</button>
-                                <Link to="/otp"><button className="btn btn-danger m-1">Thanh toán</button></Link>
+                                <Link to="/home"><button className="btn btn-dark m-1" with>Hủy</button></Link>
+                                <button onClick={OpenModal} className="btn btn-danger m-1" disabled={!checkStudentId()&&"disable"}>Thanh toán</button>
+                        </div>
+                        <div>
+                            <Modal
+                                isOpen={modalIsOpen}
+                                onRequestClose={closeModal}
+                                style={customStyles}
+                                contentLabel="Example Modal"
+                            >
+
+                                <h2>Xác nhận thông tin chuyển khoản</h2>
+                                <div>MSSV: <strong>{checkStudentId()&&id}</strong></div>
+                                <div>Họ và tên: <strong>{checkStudentId()&&profile&&profile.name}</strong></div>
+                                <div>Số dư tài khoản: <strong>{checkStudentId()&&profile&&profile.balance}</strong></div>
+                                <div>Số tiền cần nộp: <strong style={{color:"red"}}>{checkStudentId()&&debt&&debt.amount}</strong></div>
+                                <div>Số tiền còn trong tài khoản: <strong>{checkStudentId()&&checkSodu()}</strong></div>
+                                <button className="btn btn-dark m-1" onClick={closeModal}>Hủy</button>
+                                <Link to="/otp"><button className="btn btn-danger m-1">Xác nhận</button></Link>
+                                </Modal>
                         </div>
                     </div>
                 </div>
