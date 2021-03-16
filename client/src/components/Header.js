@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
-import {useSelector,useDispatch} from 'react-redux'
-import {Link} from "react-router-dom";
+import React from 'react';
+import { useSelector } from 'react-redux'
+import { Link } from "react-router-dom";
+
 const Header = (props) =>{
     const profile = useSelector(state => state.user?.profile)
     return (
@@ -15,7 +16,7 @@ const Header = (props) =>{
                         <div className="d-flex">
                             <div>You are logged in as {profile&&profile.name}
                                 <span>
-                                    <Link to="/"><a href="#">(Logout)</a></Link>
+                                    <Link to="/">Logout</Link>
                                 </span>
                             </div>
                         </div>
