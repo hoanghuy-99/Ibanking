@@ -1,27 +1,54 @@
-import React, {useState} from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import {connect} from 'react-redux';
+import { login } from '../../redux/actions/user'
 
-const Login = (props) =>{
-    return(
-        <div class="container">
-            <center>
-                <h1>LOGIN</h1>
-            </center>
-            <form>
-                <div class="mb-3">
-                    <label class="form-label">Email address</label>
-                    <input type="email" class="form-control" name="email" aria-describedby="emailHelp" placeholder="Email"/>
-                    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Password</label>
-                    <input type="password" class="form-control" name="password" placeholder="Password"/>
-                </div>
-                <div class="alert alert-danger" role="alert"></div> 
-            </form>
-            <Link to="/home"><button type="submit" class="btn btn-primary">Login</button></Link>
+class Login extends React.Component {
+    state_username = {
+        username = ''
+    }
+
+    state_password = {
+        password = ''
+    }
+
+    handleChange = event => {
+        this.setState({
+            [event.target.name]: event.target.value
+        })
+    }
+    handleSubmit = event =>{
+        event.preventDefault()
+        this.props.login(this.state_username, this.state_password)
+    }
+
+    render(){
+        return (
+            <div className="container">
+                <center>
+                    <h1>LOGIN</h1>
+                </center>
+                <form onSubmit={this.handleSubmit}>
+                    <div className="mb-3">
+                        <label className="form-label">Username</label>
+                        <input type="text" className="form-control" name="username" 
+                        value={this.state.username} onChange={this.handleChange} placeholder="Username"/>
+                    </div>
+                    <div className="mb-3">
+                        <label className="form-label">Password</label>
+                        <input type="password" className="form-control" name="password"
+                        value={this.state.password} onChange={this.handleChange} placeholder="Password"/>
+                    </div>
+                    <Link to="/home"><button type="submit" className="btn btn-primary">Login</button></Link>
+                    <br/>
+                    <br/>
+                </form>
         </div>
-    )
+        )
+    }
 }
 
-export default Login
+const mapDispatchToProps = dispatch => ({
+    login: userInfo => dispatch(login(userInfo))
+})
+  
+export default connect(null, mapDispatchToProps)(Login);

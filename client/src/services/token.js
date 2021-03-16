@@ -4,9 +4,10 @@ async function requestToken(username,password){
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
+            Accept: 'application/json'
         },
         body: JSON.stringify(data),
     })
-    return await response.json()
+    .then(response => response.json())
 }
-export{requestToken}
+export {requestToken}
