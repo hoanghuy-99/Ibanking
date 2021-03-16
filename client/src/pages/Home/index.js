@@ -1,12 +1,10 @@
 import React from 'react';
-import Header from '../../components/Header'
 import Information from './components/information'
 import { Link } from "react-router-dom";
 
 const Home = (props) =>{
     return(
         <div>
-            <Header></Header>
             <Information></Information>
             <div className="container" style={{marginTop:"100px",textAlign:"center"}}>
                 <div className="row" style={{display:"inline-flex"}}>
