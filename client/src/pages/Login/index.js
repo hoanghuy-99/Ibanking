@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { Link } from 'react-router-dom';
 
 const Login = (props) =>{
     return(
@@ -16,11 +17,9 @@ const Login = (props) =>{
                     <label class="form-label">Password</label>
                     <input type="password" class="form-control" name="password" placeholder="Password"/>
                 </div>
-                <div class="alert alert-danger" role="alert"></div>
-                <button type="submit" class="btn btn-primary">Login</button> 
-                <br/>
-                <br/>
+                <div class="alert alert-danger" role="alert"></div> 
             </form>
+            <Link to="/home"><button type="submit" class="btn btn-primary">Login</button></Link>
         </div>
     )
 }

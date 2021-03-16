@@ -30,7 +30,7 @@ const fetchUser = () => {
 
     return async (dispatch) => {
         dispatch(request())
-        const res = await requestUserById("604e07079d803c289c3fff05")
+        const res = await requestUserById("60507c54430e2a06708c7636")
         if(res.code === 0)
         {
             dispatch(success(res.data, 'Success'))  
@@ -72,10 +72,15 @@ function login(username, password){
         }
     }
 }
-
+function setUserBalance(balance){
+    return{
+        type: userConstants.SET_USER_BALANCE,
+        balance,
+    }
+}
 function logout(){
     return{
         type: userConstants.LOGOUT
     }
 }
-export { fetchUser, login ,logout}
+export { fetchUser, login ,logout,setUserBalance}
