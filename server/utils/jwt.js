@@ -5,14 +5,9 @@ function create(payload, private_key, expiresIn){
 }
 
 function verify(token, private_key){
-    try{
-        return jwt.verify(token, private_key)
-    }catch(err)
-    {
-        return undefined
-    }
+    payload = jwt.verify(token, private_key)
+    return payload
 }
-
 
 module.exports = {
     create,

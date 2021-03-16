@@ -1,6 +1,7 @@
 const connectDatabase = require('./db')
 
 const mongoose = require('mongoose')
+const hasher = require('./utils/hasher')
 
 const Debt = require('./models/Debt.js')
 const User = require('./models/User.js')
@@ -14,8 +15,12 @@ async function fakeData()
     await Transaction.deleteMany()
 
 
+    const hashed_password = await hasher.hash('123456')
+
     const user = new User({
         _id: new mongoose.Types.ObjectId(),
+        username:'Kiet',
+        hashedPassword: hashed_password,
         name:'Kiet',
         emailAddress:'Kiet@gmail.com',
         phone:'0909123456',

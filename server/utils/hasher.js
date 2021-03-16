@@ -5,7 +5,11 @@ async function hash(text) {
 }
 
 async function compare(text, hashed_text){
-    return await bcrypt.compare(text, hashed_text)
+    try{
+        return await bcrypt.compare(text, hashed_text)
+    }catch(e){
+        throw e
+    }
 }
 
 module.exports = {

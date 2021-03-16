@@ -1,8 +1,14 @@
+require('dotenv').config()
 const otpUtil = require('../utils/otp')
 const {sendEmail} = require('../utils/email_sender')
 const {createOtpEmail} = require('../utils/email_creator')
 const UserModel = require('../models/User')
 
+const otpExpIn = process.env.OTP_EXP_IN
+
+function calculateOtpExp(){
+    return Date.now() + otpExpIn*1000
+}
 
 class OtpService{
     static OTP_STATUS = {
@@ -18,7 +24,7 @@ class OtpService{
             throw new Error('User id is not exist')
         }
         user.otp.value = otp
-        user.otp.exp = Date.now()
+        user.otp.exp = calculateOtpExp()
         await user.save()
         const emailAddress = user.emailAddress
         const name = user.name
