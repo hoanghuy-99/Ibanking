@@ -1,6 +1,8 @@
 import React, {useState,useEffect} from 'react';
 import {useSelector,useDispatch} from 'react-redux'
+import { Link } from 'react-router-dom';
 import {fetchDebtByStudentId} from '../../redux/actions/debt.js'
+
 const Transaction = (props) =>{
     const profile = useSelector(state => state.user?.profile)
     const debt = useSelector(state => state.debt?.data)
@@ -75,7 +77,7 @@ const Transaction = (props) =>{
                         </form>
                         <div className="form-group">
                                 <button className="btn btn-dark m-1" with>Hủy</button>
-                                <button className="btn btn-danger m-1">Thanh toán</button>
+                                <Link to="/otp"><button className="btn btn-danger m-1">Thanh toán</button></Link>
                         </div>
                     </div>
                 </div>

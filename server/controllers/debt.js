@@ -3,7 +3,6 @@ const DebtService = require('../services/debt.js')
 
 module.exports.apiGetDebtByStudentId = async (req,res)=> {
     const student_id = req.query.student_id
-    console.log(student_id)
     debt = await DebtService.getByStudentId(student_id)
     if(debt){
         res.json({

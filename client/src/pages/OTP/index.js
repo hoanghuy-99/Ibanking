@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import OTPInput, { ResendOTP } from 'otp-input-react';
+import { Link } from 'react-router-dom';
 const renderButton = buttonProps => {
     return (
       <button {...buttonProps} className="btn btn-danger m-1">
@@ -35,11 +36,11 @@ const OTP = (props) =>{
                             />
                             </div>
                             <div style={{display:'flex',justifyContent:"center"}}>
-                            <button className="btn btn-dark m-1" with>Quay lại</button>
+                            <Link to="/transfer"><button className="btn btn-dark m-1" with>Quay lại</button></Link>
                             <ResendOTP onResendClick={handleClick} renderButton={renderButton} renderTime={renderTime}
                                 maxTime={10}
                             />
-                            <button className="btn btn-danger m-1">Xác nhận </button>
+                            <Link to="/transaction"><button className="btn btn-danger m-1">Xác nhận </button></Link>
                             </div>
                         </div>
                     </div>
