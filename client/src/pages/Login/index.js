@@ -1,48 +1,70 @@
-import React from 'react';
-import {connect} from 'react-redux';
-import { login } from '../../redux/actions/user'
-import { Link } from 'react-router-dom';
-class Login extends React.Component {
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { login, logout } from '../../redux/actions/user'
 
-
-    handleChange = event => {
-        this.setState({
-            [event.target.name]: event.target.value
-        })
+function Login(){
+    const [inputs, setInputs] = useState({
+        username = '',
+        password = ''
+    })
+    const [submitted, setSubmitted] = useState(false)
+    const { username, password } = inputs
+    const loggingIn = useSelector(state => state.authentication.loggingIn)
+    const dispatch = useDispatch()
+    const location = useLocation()
+    
+    // reset
+    useEffect(() =>{
+        dispatch(logout())
+    }, [])
+    
+    function handleChange(event) {
+        const { name, value } = event.target
+        setInputs(inputs => ({
+            ...inputs,
+            [name]: value
+        }))
     }
-    handleSubmit = event =>{
+
+    function handleSubmit(event) {
         event.preventDefault()
-        this.props.login(this.state_username, this.state_password)
+        setSubmitted(true)
+        if(username && password) {
+            const { from } = location.state || { from: { pathname: '/home' } }
+            dispatch(login(username, password, from))
+        }
     }
 
-    render(){
-        return (
-            <div className="container">
-                <center>
-                    <h1>LOGIN</h1>
-                </center>
-                <form onSubmit={this.handleSubmit}>
-                    <div className="mb-3">
-                        <label className="form-label">Username</label>
-                        <input type="text" className="form-control" name="username" 
-                        value={this.state.username} onChange={this.handleChange} placeholder="Username"/>
-                    </div>
-                    <div className="mb-3">
-                        <label className="form-label">Password</label>
-                        <input type="password" className="form-control" name="password"
-                        value={this.state.password} onChange={this.handleChange} placeholder="Password"/>
-                    </div>
-                    <Link to="/home"><button type="submit" className="btn btn-primary">Login</button></Link>
-                    <br/>
-                    <br/>
-                </form>
+    return (
+        <div className="container">
+            <center>
+                <h1>LOGIN</h1>
+            </center>
+            <form name="form" onSubmit={handleSubmit}>
+                <div className="mb-3">
+                    <label className="form-label">Username</label>
+                    <input type="text" name="username" value={username} onChange={handleChange} className={'form-control' + (submitted && !username ? ' is-invalid' : '')} />
+                    {submitted && !username &&
+                        <div className="invalid-feedback">Username is required</div>
+                    }
+                </div>
+                <div className="mb-3">
+                    <label className="form-label">Password</label>
+                    <input type="password" name="password" value={password} onChange={handleChange} className={'form-control' + (submitted && !password ? ' is-invalid' : '')} />
+                    {submitted && !password &&
+                        <div className="invalid-feedback">Password is required</div>
+                    }
+                </div>
+                <div className="form-group">
+                    <button className="btn btn-primary">
+                        {loggingIn && <span className="spinner-border spinner-border-sm mr-1"></span>}
+                        Login
+                    </button>
+                </div>
+            </form>
         </div>
-        )
-    }
+    )
 }
 
-const mapDispatchToProps = dispatch => ({
-    login: userInfo => dispatch(login(userInfo))
-})
-  
-export default connect(null, mapDispatchToProps)(Login);
+export { Login }

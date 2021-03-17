@@ -16,7 +16,7 @@ const Header = (props) =>{
                         <div className="d-flex">
                             <div>You are logged in as {profile&&profile.name}
                                 <span>
-                                    <Link to="/">Logout</Link>
+                                    <Link to="/login">Logout</Link>
                                 </span>
                             </div>
                         </div>
