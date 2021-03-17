@@ -5,14 +5,17 @@ import { login, logout } from '../../redux/actions/user'
 
 function Login(){
     const [inputs, setInputs] = useState({
-        username = '',
-        password = ''
+        username: '',
+        password: ''
     })
     const [submitted, setSubmitted] = useState(false)
     const { username, password } = inputs
     const loggingIn = useSelector(state => state.authentication.loggingIn)
     const dispatch = useDispatch()
     const location = useLocation()
+    useEffect(()=>{
+        console.log(inputs)
+    }, [inputs])
     
     // reset
     useEffect(() =>{
@@ -67,4 +70,4 @@ function Login(){
     )
 }
 
-export { Login }
+export default Login
