@@ -1,6 +1,6 @@
 import React from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
-import Header from './components/Header.js'
+import Header from './pages/Header/Header.js'
 import Transaction from "./pages/Transaction/index.js"
 import Home from "./pages/Home/index.js"
 import Login from "./pages/Login/index.js"
