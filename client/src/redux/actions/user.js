@@ -1,13 +1,7 @@
 import userConstants from '../constants/user'
 import {requestUserById} from '../../services/user.js'
-function requestToken(username,password){
-    return{
-        code: 0,
-        data:{
-            token: "JHGA76aahsd6438"
-        }
-    }
-}
+import { requestToken } from '../../services/token'
+
 const fetchUser = () => {
     function request(){
         return { type: userConstants.FETCH_USER }
@@ -42,7 +36,7 @@ const fetchUser = () => {
     }
 }
 
-function login(username, password){
+function login(username, password, from){
     function request(){
         return {type: userConstants.LOGIN}
     }
@@ -60,16 +54,17 @@ function login(username, password){
         }
     }
     return async (dispatch) =>{
-        dispatch(request())
-        const res = await requestToken(username,password)
-        if(res.code === 0)
-        {
-            dispatch(success(res.data,'Login Success'))
-        }
-        else
-        {
-            dispatch(failure('Username or Password is wrong'))
-        }
+        dispatch(request({ username }))
+        requestToken(username, password)
+            .then(
+                user => {
+                    dispatch(success(user))
+                    history.push(from)
+                },
+                error => {
+                    dispatch(failure(error.toString()))
+                }
+            )
     }
 }
 function setUserBalance(balance){
@@ -83,4 +78,4 @@ function logout(){
         type: userConstants.LOGOUT
     }
 }
-export { fetchUser, login ,logout,setUserBalance}
+export { fetchUser, login ,logout, setUserBalance}

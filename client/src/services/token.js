@@ -1,13 +1,15 @@
-async function requestToken(username,password){
-    const data = {username:username, password:password} 
-    const response = await fetch("api/tokens", {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json'
-        },
-        body: JSON.stringify(data),
-    })
-    .then(response => response.json())
+function requestToken(username,password) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+    }
+    return fetch('api/tokens', requestOptions)
+        .then(handleResponse)
+        .then(user => {
+            localStorage.setItem('user', JSON.stringify(user));
+            return user;
+        });
 }
+
 export {requestToken}
