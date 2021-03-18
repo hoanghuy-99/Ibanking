@@ -40,15 +40,15 @@ async function fakeData()
         debt: debt._id,
         user: user._id
     })
-
+    user.transactions.push(tran._id)
     const docs = [user, debt, tran]
     for(let i = 0; i < docs.length; i++ )
     {   
         await docs[i].save()
     }
-    let u = await User.findOne().populate('Transaction').exec()
-    console.log(u)
-    console.log(u.transactions)
+    const trans = await Transaction.find({user:user._id}).populate('debt')
+    
+    console.log(trans)
 }
 fakeData().then(()=>{
     console.log('Fake data were created')

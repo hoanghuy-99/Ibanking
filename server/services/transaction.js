@@ -18,7 +18,7 @@ class TransactionService{
         let balance = user.balance
         const amount = debt.amount
 
-        transaction = new TransactionModel({
+        const tran = new TransactionModel({
             _id: new mongoose.Types.ObjectId(),
             debt_id: debt_id,
             user_id: user_id
@@ -31,18 +31,14 @@ class TransactionService{
         balance -= amount
 
         user.balance = balance
-
+        user.transactions.push(tran._id)
         await user.save()
         await transaction.save()
         return true
     }
 
     static async getAllByUserId(user_id){
-        user = await UserModel.findById(user_id)
-        if(!user){
-            throw new Error('User id not exist')
-        }
-        const trans = user.transactions
+        const trans = await TransactionModel.find({user:user_id}).populate('debt')
         return trans
     }
 }

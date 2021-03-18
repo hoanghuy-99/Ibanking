@@ -6,8 +6,7 @@ const debtSchema = new mongoose.Schema({
         id: String,
         name: String,
     },
-    amount: Number,
-    transaction: { type: mongoose.Types.ObjectId, ref: 'Transaction' }
+    amount: Number
 })
 
 module.exports = mongoose.model('Debt', debtSchema)
