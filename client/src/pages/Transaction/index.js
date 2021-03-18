@@ -22,11 +22,22 @@ const Transaction = (props) =>{
         }
         setId(student_id)
     }
+    const [msg,setMsg] = useState("")
+    const [boo,setBoo] = useState(false)
+    console.log(boo);
     const checkSodu=()=>{
         if(profile?.balance !=0 && debt?.amount !=0){
-            return profile?.balance - debt?.amount
+            if(profile?.balance < debt?.amount ){
+                setMsg("Số dư không đủ để thực hiện giao dịch")
+                setBoo(true)
+            }
+            else
+            {
+                setBoo(false)
+                setMsg( profile?.balance - debt?.amount)
+            }
+            
         }
-        return "Không có dữ liệu"
     }
     const customStyles = {
         content : {
@@ -46,6 +57,7 @@ const Transaction = (props) =>{
     }
     function OpenModal(){
         setIsOpen(true)
+        checkSodu()
     }
     return(
         <div>
@@ -118,9 +130,9 @@ const Transaction = (props) =>{
                                 <div>Họ và tên: <strong>{checkStudentId()&&debt&&debt.student.name}</strong></div>
                                 <div>Số dư tài khoản: <strong>{checkStudentId()&&profile&&profile.balance}</strong></div>
                                 <div>Số tiền cần nộp: <strong style={{color:"red"}}>{checkStudentId()&&debt&&debt.amount}</strong></div>
-                                <div>Số tiền còn trong tài khoản: <strong>{checkStudentId()&&checkSodu()}</strong></div>
+                                <div>Số tiền còn trong tài khoản: <strong style={{color:"red"}}>{checkStudentId()&&msg}</strong></div>
                                 <button className="btn btn-dark m-1" onClick={closeModal}>Hủy</button>
-                                <Link to="/otp"><button className="btn btn-danger m-1">Xác nhận</button></Link>
+                                <Link to="/otp"><button className="btn btn-danger m-1" disabled={boo}>Xác nhận</button></Link>
                                 </Modal>
                         </div>
                     </div>
