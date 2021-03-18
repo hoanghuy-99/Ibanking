@@ -35,13 +35,20 @@ async function fakeData()
         amount: 6969696969
     })
 
-    const docs = [user, debt]
+    const tran = new Transaction({
+        _id: new mongoose.Types.ObjectId(),
+        debt: debt._id,
+        user: user._id
+    })
+
+    const docs = [user, debt, tran]
     for(let i = 0; i < docs.length; i++ )
     {   
         await docs[i].save()
     }
-    let u = await Debt.findOne({'student.id':'51702125'})
+    let u = await User.findOne().populate('Transaction').exec()
     console.log(u)
+    console.log(u.transactions)
 }
 fakeData().then(()=>{
     console.log('Fake data were created')

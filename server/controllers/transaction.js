@@ -11,14 +11,50 @@ function makeTransaction(req, res){
 
     const OTP_STATUS = OtpService.OTP_STATUS
 
-    switch(otp_status){
+    switch(status){
         case OTP_STATUS.VALID:
-            return res.json({
-                code: 0,
-                data: {
-                    user
-                }
-            })
+            try{
+                const canPay = await TransactionService.payDebt(user_id, debt_id)
+            }catch(e){
+                return res.json({
+                    code: 1,
+                    message: e
+                })
+            }
+            
+
+            if(canPay)
+            {
+                let user = await UserService.getById(user_id)
+                const balance = user.balance
+                const tran = user.transactions.find((t)=>{
+                    return t.debt_id === debt_id
+                })
+                return res.json({
+                    code: 0,
+                    data: {
+                        user:{
+                            balance
+                        },
+                        transaction:{
+                            id: tran._id,
+                            time: tran.time,
+                            student:{
+                                name: tran.student.name,
+                                id: tran.student.id
+                            },
+                            amount: tran.amount
+                        }
+                    }
+                })
+            }
+            else{
+                return res.json({
+                    code: 5,
+                    message: 'Balance is not enough for the transaction'
+                })
+            }
+            
         case OTP_STATUS.INVALID:
             return res.json({
                 code: 10,

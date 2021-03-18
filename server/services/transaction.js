@@ -4,7 +4,6 @@ const TransactionModel = require('../models/Transaction')
 const mongoose = require('mongoose')
 
 class TransactionService{
-
     static payDebt(user_id, debt_id) {
         debt = await DebtModel.findById(debt_id)
         if(!debt){
@@ -35,15 +34,18 @@ class TransactionService{
 
         await user.save()
         await transaction.save()
-
-        
-
-        
+        return true
     }
 
-    static getByUserId(user_id){
+    static async getAllByUserId(user_id){
+        user = await UserModel.findById(user_id)
+        if(!user){
+            throw new Error('User id not exist')
+        }
+        const trans = user.transactions
+        return trans
     }
 }
 
 
-export default TransactionService
+module.exports = TransactionService
