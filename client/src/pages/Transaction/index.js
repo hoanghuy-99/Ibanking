@@ -3,6 +3,7 @@ import {useSelector,useDispatch} from 'react-redux'
 import Modal from 'react-modal';
 import { Link } from 'react-router-dom';
 import {fetchDebtByStudentId} from '../../redux/actions/debt.js'
+import {sendOtp} from '../../redux/actions/otp.js'
 
 const Transaction = (props) =>{
     const profile = useSelector(state => state.user?.profile)
@@ -21,6 +22,9 @@ const Transaction = (props) =>{
             dispatch(fetchDebtByStudentId(student_id))
         }
         setId(student_id)
+    }
+    const handleClick = (e)=>{
+        dispatch(sendOtp())
     }
     const [msg,setMsg] = useState("")
     const [boo,setBoo] = useState(false)
@@ -132,7 +136,7 @@ const Transaction = (props) =>{
                                 <div>Số tiền cần nộp: <strong style={{color:"red"}}>{checkStudentId()&&debt&&debt.amount}</strong></div>
                                 <div>Số tiền còn trong tài khoản: <strong style={{color:"red"}}>{checkStudentId()&&msg}</strong></div>
                                 <button className="btn btn-dark m-1" onClick={closeModal}>Hủy</button>
-                                <Link to="/otp"><button className="btn btn-danger m-1" disabled={boo}>Xác nhận</button></Link>
+                                <Link to="/otp" onClick={handleClick}><button className="btn btn-danger m-1" disabled={boo}>Xác nhận</button></Link>
                                 </Modal>
                         </div>
                     </div>

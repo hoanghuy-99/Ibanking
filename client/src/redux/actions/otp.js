@@ -1,5 +1,5 @@
 import otpConstants from '../constants/otp'
-
+import {requestNewOTP} from '../../services/otp.js'
 function sendOtp() {
     function request() {
         return { type: otpConstants.SEND_OTP }

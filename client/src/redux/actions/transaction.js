@@ -1,6 +1,6 @@
 import TransactionConstants from "../constants/transaction.js"
 import {setUserBalance} from "../actions/user.js"
-import {requestNewTransaction} from "../../services/transaction.js"
+import {requestNewTransaction,requestTransaction} from "../../services/transaction.js"
 function fetchTransactions(){
     function request(){
         return {type: TransactionConstants.FETCH_TRANSACTION}
@@ -22,13 +22,13 @@ function fetchTransactions(){
     }
     return async(dispatch) => {
         dispatch(request())
-        /*const res = await requestTransaction()
+        const res = await requestTransaction()
         if(res.code === 0){
             dispatch(success(res.data,'Load data successfully'))
         }
         else{
             dispatch(failure('Fail to load data'))
-        }*/
+        }
         
     }
 }

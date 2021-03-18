@@ -1,6 +1,9 @@
 import React, {useState} from 'react';
 import OTPInput, { ResendOTP } from 'otp-input-react';
+import {useSelector,useDispatch} from 'react-redux'
 import { Link } from 'react-router-dom';
+import {sendOtp} from '../../redux/actions/otp.js'
+import {makeTransaction} from '../../redux/actions/transaction.js'
 const renderButton = buttonProps => {
     return (
       <button {...buttonProps} className="btn btn-danger m-1">
@@ -13,7 +16,12 @@ const renderButton = buttonProps => {
   const renderTime = () => React.Fragment;
 const OTP = (props) =>{
     const [otp, setOTP] = useState("")
-    const handleClick = () =>{
+    const dispatch = useDispatch()
+    const handleClick = (e) =>{
+        dispatch(sendOtp())
+    }
+    const conFirm = (e)=>{
+        dispatch(makeTransaction(otp))
     }
     return(
         <div>
@@ -40,7 +48,7 @@ const OTP = (props) =>{
                             <ResendOTP onResendClick={handleClick} renderButton={renderButton} renderTime={renderTime}
                                 maxTime={10}
                             />
-                            <Link to="/transaction"><button className="btn btn-danger m-1">Xác nhận </button></Link>
+                            <Link to="/transaction" onClick={conFirm}><button className="btn btn-danger m-1">Xác nhận </button></Link>
                             </div>
                         </div>
                     </div>
