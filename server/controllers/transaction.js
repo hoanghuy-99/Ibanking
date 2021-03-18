@@ -22,10 +22,9 @@ function makeTransaction(req, res){
                 })
             }
             
-
             if(canPay)
             {
-                let user = await UserService.getById(user_id)
+                let user = await UserService.getById(user_id).populate('transactions')
                 const balance = user.balance
                 const tran = user.transactions.find((t)=>{
                     return t.debt_id === debt_id
@@ -70,7 +69,39 @@ function makeTransaction(req, res){
 
 }
 
-function getTransactions(req, res){
+async function getTransactions(req, res){
+    const user_id = req.token.user_id
+    let trans
+    try{
+        trans = await TransactionService.getAllByUserId(user_id)
+    }catch(e){
+        console.log(e)
+        return res.json({
+            code: 1,
+            message: 'User id not exists'
+        })
+    }
+
+    const json_transactions = []
+
+    trans.forEach(t => {
+        json_transactions.push({
+            id: t._id,
+            time: t.time,
+            student: {
+                id: t.debt.student.id,
+                name: t.debt.student.name
+            },
+            amount: t.debt.amount
+        })
+    });
+
+    return res.json({
+        code: 0,
+        data:{
+            transactions: json_transactions
+        }
+    })
     
 }
 
