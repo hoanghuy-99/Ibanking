@@ -5,7 +5,7 @@ function requestToken(username,password) {
         body: JSON.stringify({ username, password })
     }
     return fetch('api/tokens', requestOptions)
-        .then(handleResponse)
+        //.then()
         .then(user => {
             localStorage.setItem('user', JSON.stringify(user));
             return user;

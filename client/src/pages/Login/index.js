@@ -10,9 +10,10 @@ function Login(){
     })
     const [submitted, setSubmitted] = useState(false)
     const { username, password } = inputs
-    const loggingIn = useSelector(state => state.authentication.loggingIn)
+    ///const loggingIn = useSelector(state => state.authentication.loggingIn)
     const dispatch = useDispatch()
     const location = useLocation()
+    
     useEffect(()=>{
         console.log(inputs)
     }, [inputs])
@@ -40,7 +41,7 @@ function Login(){
     }
 
     return (
-        <div className="container">
+        <div className="container" style={{ margin: "5% 13%" }}>
             <center>
                 <h1>LOGIN</h1>
             </center>
@@ -61,7 +62,6 @@ function Login(){
                 </div>
                 <div className="form-group">
                     <button className="btn btn-primary">
-                        {loggingIn && <span className="spinner-border spinner-border-sm mr-1"></span>}
                         Login
                     </button>
                 </div>
