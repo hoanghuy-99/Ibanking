@@ -21,6 +21,7 @@ const OTP = (props) =>{
         dispatch(sendOtp())
     }
     const conFirm = (e)=>{
+        console.log(otp)
         dispatch(makeTransaction(otp))
     }
     return(

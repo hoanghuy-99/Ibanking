@@ -6,7 +6,7 @@ function setToken(token){
 }
 
 function getToken(){
-    Cookie.get('token')
+    return Cookie.get('token')
 }
 
 export {

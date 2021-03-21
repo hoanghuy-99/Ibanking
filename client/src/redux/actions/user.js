@@ -54,8 +54,9 @@ function login(username, password, from){
         }
     }
     return async (dispatch) =>{
-        dispatch(request({ username }))
+        dispatch(request())
         const res = await requestToken(username, password)
+        console.log(res);
         if(res.code === 0){
             const token = res.data.token
             dispatch(success(token, ''))

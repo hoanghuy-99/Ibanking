@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'; 
+import { useLocation,Redirect } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { login, logout } from '../../redux/actions/user'
 
 function Login(){
+    const checkLogin = useSelector(state => state.user?.loggedIn)
     const [inputs, setInputs] = useState({
         username: '',
         password: ''
@@ -34,7 +35,9 @@ function Login(){
             dispatch(login(username, password, from))
         }
     }
-
+    if(checkLogin == true){
+        return <Redirect to="/home"/>
+    }
     return (
         <div className="container" style={{ margin: "5% 13%" }}>
             <center>
@@ -56,7 +59,7 @@ function Login(){
                     }
                 </div>
                 <div className="form-group">
-                    <button className="btn btn-primary">
+                    <button onClick={handleSubmit} className="btn btn-primary">
                         Login
                     </button>
                 </div>

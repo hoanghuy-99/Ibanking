@@ -6,8 +6,7 @@ const UserModel = require('../models/User')
 const privateKey = process.env.PRIVATE_KEY
 
 async function apiSendOtp(req, res){
-    const user_id = req.query.user_id //req.token.user_id
-    
+    const user_id = req.token.user_id
     const rs = await OtpService.sendNewOtpToUser(user_id)
     if(rs){
         res.json({

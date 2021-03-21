@@ -5,7 +5,7 @@ async function requestToken(username,password) {
         body: JSON.stringify({ username, password })
     }
 
-    let data = await fetch('api/tokens', requestOptions)
+    let data = await fetch('http://localhost:8080/api/tokens', requestOptions)
     data = await data.json()
     return data
 }
