@@ -1,6 +1,7 @@
 import userConstants from '../constants/user'
 import {requestUserById} from '../../services/user.js'
 import { requestToken } from '../../services/token'
+import { removeToken } from '../../cookie'
 
 const fetchUser = () => {
     function request(){
@@ -72,6 +73,7 @@ function setUserBalance(balance){
     }
 }
 function logout(){
+    removeToken()
     return{
         type: userConstants.LOGOUT
     }

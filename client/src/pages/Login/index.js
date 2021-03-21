@@ -15,10 +15,6 @@ function Login(){
     const dispatch = useDispatch()
     const location = useLocation()
     
-    useEffect(()=>{
-        console.log(inputs)
-    }, [inputs])
-    
     function handleChange(event) {
         const { name, value } = event.target
         setInputs(inputs => ({
@@ -31,14 +27,12 @@ function Login(){
         event.preventDefault()
         setSubmitted(true)
         if(username && password) {
-            const { from } = location.state || { from: { pathname: '/home' } }
-            dispatch(login(username, password, from))
+            dispatch(login(username, password))
         }
     }
-    if(checkLogin == true){
-        return <Redirect to="/home"/>
-    }
     return (
+        <>
+        { checkLogin && <Redirect to='/home'/>}
         <div className="container" style={{ margin: "5% 13%" }}>
             <center>
                 <h1>LOGIN</h1>
@@ -65,6 +59,7 @@ function Login(){
                 </div>
             </form>
         </div>
+        </>
     )
 }
 

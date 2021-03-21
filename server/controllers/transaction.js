@@ -10,26 +10,23 @@ const TransactionService = require('../services/transaction')
     const status = await OtpService.check(otp, user_id)
 
     const OTP_STATUS = OtpService.OTP_STATUS
-    let canPay = false
+    let tran = undefined
     switch(status){
         case OTP_STATUS.VALID:
             try{
-                 canPay = await TransactionService.payDebt(user_id, debt_id)
+                tran = await TransactionService.payDebt(user_id, debt_id)
             }catch(e){
                 return res.json({
                     code: 1,
                     message: e
                 })
             }
-            
-            if(canPay)
+            console.log(tran)
+            if(tran)
             {
                 let user = await UserService.getById(user_id)
                 const balance = user.balance
-                const tran = user.transactions.find((t)=>{
-                    console.log(t)
-                    return t.debt === debt_id
-                })
+                console.log(user)
                 console.log(tran)
                 return res.json({
                     code: 0,
@@ -41,10 +38,10 @@ const TransactionService = require('../services/transaction')
                             id: tran._id,
                             time: tran.time,
                             student:{
-                                name: tran.student.name,
-                                id: tran.student.id
+                                name: tran.debt.student.name,
+                                id: tran.debt.student.id
                             },
-                            amount: tran.amount
+                            amount: tran.debt.amount
                         }
                     }
                 })

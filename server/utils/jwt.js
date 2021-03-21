@@ -5,7 +5,13 @@ function create(payload, private_key, expiresIn){
 }
 
 function verify(token, private_key){
-    payload = jwt.verify(token, private_key)
+    let payload
+    try{
+        payload = jwt.verify(token, private_key)
+    }catch(e){
+        return undefined
+    }
+    
     return payload
 }
 
