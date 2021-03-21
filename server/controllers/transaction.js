@@ -2,7 +2,7 @@ const OtpService = require('../services/otp')
 const UserService = require('../services/user')
 const TransactionService = require('../services/transaction')
 
-function makeTransaction(req, res){
+ async function makeTransaction(req, res){
     const debt_id = req.body.debt_id
     const otp = req.body.otp
     const user_id = req.token.user_id
@@ -10,11 +10,11 @@ function makeTransaction(req, res){
     const status = OtpService.check(otp, user_id)
 
     const OTP_STATUS = OtpService.OTP_STATUS
-
+    let canPay = false
     switch(status){
         case OTP_STATUS.VALID:
             try{
-                const canPay = await TransactionService.payDebt(user_id, debt_id)
+                 canPay = await TransactionService.payDebt(user_id, debt_id)
             }catch(e){
                 return res.json({
                     code: 1,

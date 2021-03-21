@@ -27,10 +27,9 @@ const Transaction = (props) =>{
         dispatch(sendOtp())
     }
     const [msg,setMsg] = useState("")
-    const [boo,setBoo] = useState(false)
-    console.log(boo);
+    const [boo,setBoo] = useState(true)
     const checkSodu=()=>{
-        if(profile?.balance !=0 && debt?.amount !=0){
+        if(profile?.balance !=0 && debt?.amount !=0 && profile?.balance && debt?.amount){
             if(profile?.balance < debt?.amount ){
                 setMsg("Số dư không đủ để thực hiện giao dịch")
                 setBoo(true)

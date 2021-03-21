@@ -4,7 +4,7 @@ const TransactionModel = require('../models/Transaction')
 const mongoose = require('mongoose')
 
 class TransactionService{
-    static payDebt(user_id, debt_id) {
+    static async payDebt(user_id, debt_id) {
         debt = await DebtModel.findById(debt_id)
         if(!debt){
             throw new Error('Debt id not exist')
