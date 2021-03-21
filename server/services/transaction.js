@@ -5,12 +5,12 @@ const mongoose = require('mongoose')
 
 class TransactionService{
     static async payDebt(user_id, debt_id) {
-        debt = await DebtModel.findById(debt_id)
+        let debt = await DebtModel.findById(debt_id)
         if(!debt){
             throw new Error('Debt id not exist')
         }
 
-        user = await UserModel.findById(user_id)
+        let user = await UserModel.findById(user_id)
         if(!user){
             throw new Error('User id not exist')
         }
@@ -33,7 +33,7 @@ class TransactionService{
         user.balance = balance
         user.transactions.push(tran._id)
         await user.save()
-        await transaction.save()
+        await tran.save()
         return true
     }
 

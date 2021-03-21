@@ -7,7 +7,7 @@ const TransactionService = require('../services/transaction')
     const otp = req.body.otp
     const user_id = req.token.user_id
 
-    const status = OtpService.check(otp, user_id)
+    const status = await OtpService.check(otp, user_id)
 
     const OTP_STATUS = OtpService.OTP_STATUS
     let canPay = false
@@ -24,11 +24,13 @@ const TransactionService = require('../services/transaction')
             
             if(canPay)
             {
-                let user = await UserService.getById(user_id).populate('transactions')
+                let user = await UserService.getById(user_id)
                 const balance = user.balance
                 const tran = user.transactions.find((t)=>{
-                    return t.debt_id === debt_id
+                    console.log(t)
+                    return t.debt === debt_id
                 })
+                console.log(tran)
                 return res.json({
                     code: 0,
                     data: {
