@@ -18,11 +18,6 @@ function Login(){
         console.log(inputs)
     }, [inputs])
     
-    // reset
-    useEffect(() =>{
-        dispatch(logout())
-    }, [])
-    
     function handleChange(event) {
         const { name, value } = event.target
         setInputs(inputs => ({

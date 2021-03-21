@@ -40,10 +40,10 @@ function login(username, password, from){
     function request(){
         return {type: userConstants.LOGIN}
     }
-    function success(tokens,message){
+    function success(token,message){
         return {
             type: userConstants.LOGIN_SUCCESS,
-            tokens,
+            token,
             message
         }
     }
@@ -55,15 +55,13 @@ function login(username, password, from){
     }
     return async (dispatch) =>{
         dispatch(request({ username }))
-        requestToken(username, password)
-            .then(
-                user => {
-                    dispatch(success(user))
-                },
-                error => {
-                    dispatch(failure(error.toString()))
-                }
-            )
+        const res = await requestToken(username, password)
+        if(res.code === 0){
+            const token = res.data.token
+            dispatch(success(token, ''))
+        }else{
+            dispatch(failure(res.message))
+        }
     }
 }
 function setUserBalance(balance){
@@ -77,4 +75,11 @@ function logout(){
         type: userConstants.LOGOUT
     }
 }
-export { fetchUser, login ,logout, setUserBalance}
+
+function checkLogin(){
+    return {
+        type: userConstants.CHECK_LOGIN
+    }
+}
+
+export { fetchUser, login ,logout, setUserBalance, checkLogin}
