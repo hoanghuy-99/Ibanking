@@ -34,7 +34,6 @@ export default (state = initialState, action) => {
         case userConstants.LOGIN:
             return{
                 ...state,
-                loggedIn: true,
                 requesting: true
             }
         case userConstants.LOGIN_SUCCESS:
