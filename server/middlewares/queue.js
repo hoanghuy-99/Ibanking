@@ -1,27 +1,37 @@
+const EventEmitter = require('events');
 
-
-
-const block = (action)=> (req, res, next)=>{
-    return  async ()=>{
-        console.log('in block', req.params.num)
-        if(queue)
-        await action(req, res, next)
-        if(queue.length > 0){
-            await queue.pop(0)()
+module.exports.setUpRequestQueue = (action, createIdFromReq) =>{
+    const eventEmitter = new EventEmitter()
+    const runningList = []
+    
+    return async (req, res, next) => {
+        const id = createIdFromReq(req)
+        if(!id){
+            await action(req, res, next)
+            return
         }
-    }
-}
 
-let isRunning = false
+        if(!runningList.includes(id)){
+            runningList.push(id)
+            await action(req, res, next)
+            runningList.splice(runningList.indexOf(id), 1)
+            eventEmitter.emit('requestQueue')
+            return
+        }
+        
+        const block = async ()=>{
+            if(runningList.includes(id)){
+                return
+            }
+            eventEmitter.off('requestQueue',block)
+            runningList.push(id)
+            await action(req, res, next)
+            runningList.splice(runningList.indexOf(id), 1)
+            eventEmitter.emit('requestQueue')
+        }
+        eventEmitter.on('requestQueue', block)
 
-module.exports.setUpRequestQueue = (action) => async (req, res, next) => {
-    console.log('new block:'+req.params.num)
-    while(isRunning){
-        await new Promise((resolve) => setImmediate(()=> resolve()))
     }
-    isRunning = true
-    await action(req, res, next)
-    isRunning = false
 }
 
 //
