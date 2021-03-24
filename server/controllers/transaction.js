@@ -2,7 +2,7 @@ const OtpService = require('../services/otp')
 const UserService = require('../services/user')
 const TransactionService = require('../services/transaction')
 
- async function makeTransaction(req, res){
+ async function apiMakeTransaction(req, res){
     const debt_id = req.body.debt_id
     const otp = req.body.otp
     const user_id = req.token.user_id
@@ -69,7 +69,7 @@ const TransactionService = require('../services/transaction')
 
 }
 
-async function getTransactions(req, res){
+async function apiGetTransactions(req, res){
     const user_id = req.token.user_id
     let trans
     try{
@@ -107,6 +107,6 @@ async function getTransactions(req, res){
 }
 
 module.exports = {
-    makeTransaction,
-    getTransactions
+    apiGetTransactions,
+    apiMakeTransaction
 }

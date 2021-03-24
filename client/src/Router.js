@@ -15,7 +15,9 @@ const Router = () => {
     const loggedIn = useSelector(state => state.user.loggedIn)
     const dispatch = useDispatch()
     useEffect(()=>{
-        dispatch(checkLogin())
+        if(getToken()){
+            dispatch(checkLogin())
+        }
     }, [getToken()])
 
     useEffect(()=>{
@@ -23,7 +25,6 @@ const Router = () => {
             dispatch(fetchUser())
         }
     }, [loggedIn])
-
 
     return (
         <BrowserRouter>

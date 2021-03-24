@@ -10,6 +10,10 @@ class TransactionService{
             throw new Error('Debt id not exist')
         }
 
+        if(debt.isPaid){
+            throw new Error('The debt was paid')
+        }
+
         let user = await UserModel.findById(user_id)
         if(!user){
             throw new Error('User id not exist')
