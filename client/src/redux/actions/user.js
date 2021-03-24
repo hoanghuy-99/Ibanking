@@ -2,6 +2,7 @@ import userConstants from '../constants/user'
 import {requestUserById} from '../../services/user.js'
 import { requestToken } from '../../services/token'
 import { removeToken } from '../../cookie'
+import { alertActions } from '../actions/alert';
 
 const fetchUser = () => {
     function request(){
@@ -57,12 +58,12 @@ function login(username, password, from){
     return async (dispatch) =>{
         dispatch(request())
         const res = await requestToken(username, password)
-        console.log(res);
         if(res.code === 0){
             const token = res.data.token
             dispatch(success(token, ''))
-        }else{
+        } else {
             dispatch(failure(res.message))
+            dispatch(alertActions.error(res.message))
         }
     }
 }
