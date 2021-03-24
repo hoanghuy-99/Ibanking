@@ -59,8 +59,11 @@ function makeTransaction(otp){
             dispatch(setUserBalance(res.data.user.balance))
             dispatch(success(res.data,"Successfully"))
         }
+        else if(res.code === 10){
+            dispatch(failure("OTP không hợp lệ"))
+        }
         else{
-            dispatch(failure("Can't make transaction"))
+            dispatch(failure("OTP hết hạn"))
         }
     }
 }

@@ -40,14 +40,16 @@ const initialState = {
                 ...state,
                 requesting: false,
                 info_pay: action.info_pay,
-                message: action.message
+                message: action.message,
+                isSuccess: true
             }
         case TransactionConstants.MAKE_TRANSACTION_FAILURE:
             return{
                 ...state,
                 requesting: false,
                 info_pay: undefined,
-                message: action.message
+                message: action.message,
+                isSuccess: false
             }
         default:
             return state

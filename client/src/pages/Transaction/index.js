@@ -26,12 +26,14 @@ const Transaction = (props) =>{
     const handleClick = (e)=>{
         dispatch(sendOtp())
     }
+    const [disable,setDisable] = useState("")
     const [msg,setMsg] = useState("")
     const [boo,setBoo] = useState(true)
     const checkSodu=()=>{
         if(profile?.balance !=0 && debt?.amount !=0 && profile?.balance && debt?.amount){
             if(profile?.balance < debt?.amount ){
                 setMsg("Số dư không đủ để thực hiện giao dịch")
+                setDisable("disabled-link")
                 setBoo(true)
             }
             else
@@ -140,7 +142,7 @@ const Transaction = (props) =>{
                                 <div>Số tiền cần nộp: <strong style={{color:"red"}}>{checkStudentId()&&debt&&debt.amount}</strong></div>
                                 <div>Số tiền còn trong tài khoản: <strong style={{color:"red"}}>{checkStudentId()&&msg}</strong></div>
                                 <button className="btn btn-dark m-1" onClick={closeModal}>Hủy</button>
-                                <Link to="/otp" onClick={handleClick}><button className="btn btn-danger m-1" disabled={boo}>Xác nhận</button></Link>
+                                <Link to="/otp" className={disable} onClick={handleClick}><button className="btn btn-danger m-1" disabled={boo}>Xác nhận</button></Link>
                                 </Modal>
                         </div>
                     </div>

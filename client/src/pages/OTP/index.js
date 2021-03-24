@@ -35,6 +35,12 @@ const OTP = (props) =>{
         }
         return false
     }
+    const checkOTP = ()=>{
+        if(otp.length < 6){
+            return true
+        }
+        return false
+    }
     return(
         <>
         {checkEndRequest() && <Redirect to="/transaction"/>}
@@ -62,7 +68,7 @@ const OTP = (props) =>{
                             <ResendOTP onResendClick={handleClick} renderButton={renderButton} renderTime={renderTime}
                                 maxTime={10}
                             />
-                            <button onClick={conFirm} className="btn btn-danger m-1">Xác nhận </button>
+                            <button onClick={conFirm} className="btn btn-danger m-1" disabled={checkOTP()}>Xác nhận </button>
                             </div>
                         </div>
                     </div>
