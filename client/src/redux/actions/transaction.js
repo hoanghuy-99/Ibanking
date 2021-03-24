@@ -24,7 +24,7 @@ function fetchTransactions(){
         dispatch(request())
         const res = await requestTransaction()
         if(res.code === 0){
-            dispatch(success(res.data,'Load data successfully'))
+            dispatch(success(res.data.transactions,'Load data successfully'))
         }
         else{
             dispatch(failure('Fail to load data'))

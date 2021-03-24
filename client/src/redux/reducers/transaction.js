@@ -5,13 +5,15 @@ const initialState = {
     message: undefined,
     history: undefined,
     info_pay: undefined,
+    isSuccess: false
 }
  export default (state = initialState, action)=> {
     switch(action.type){
         case TransactionConstants.FETCH_TRANSACTION:
             return{
                 ...state,
-                requesting:true
+                requesting:true,
+                message: undefined
             }
         case TransactionConstants.FETCH_TRANSACTION_SUCCESS:
             return{
@@ -31,20 +33,21 @@ const initialState = {
             return{
                 ...state,
                 requesting: true,
+                message: undefined
             }
         case TransactionConstants.MAKE_TRANSACTION_SUCCESS:
             return{
                 ...state,
                 requesting: false,
                 info_pay: action.info_pay,
-                message
+                message: action.message
             }
         case TransactionConstants.MAKE_TRANSACTION_FAILURE:
             return{
                 ...state,
                 requesting: false,
                 info_pay: undefined,
-                message
+                message: action.message
             }
         default:
             return state

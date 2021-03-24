@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import OTPInput, { ResendOTP } from 'otp-input-react';
 import {useSelector,useDispatch} from 'react-redux'
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import {sendOtp} from '../../redux/actions/otp.js'
 import {makeTransaction} from '../../redux/actions/transaction.js'
 const renderButton = buttonProps => {
@@ -23,8 +23,21 @@ const OTP = (props) =>{
     const conFirm = (e)=>{
         console.log(otp)
         dispatch(makeTransaction(otp))
+        setIsClick(true)
+    }
+    const request = useSelector(state => state.transactions?.requesting)
+    const message = useSelector(state => state.transactions?.message)
+    const [isClick,setIsClick] = useState(false)
+    const checkEndRequest = ()=>{
+        console.log(request,message);
+        if(request == false && message && isClick){
+            return true
+        }
+        return false
     }
     return(
+        <>
+        {checkEndRequest() && <Redirect to="/transaction"/>}
         <div>
            <div className="container my-3">
                 <div className="row justify-content-center">
@@ -49,13 +62,14 @@ const OTP = (props) =>{
                             <ResendOTP onResendClick={handleClick} renderButton={renderButton} renderTime={renderTime}
                                 maxTime={10}
                             />
-                            <Link to="/transaction" onClick={conFirm}><button className="btn btn-danger m-1">Xác nhận </button></Link>
+                            <button onClick={conFirm} className="btn btn-danger m-1">Xác nhận </button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        </>
     )
 }
 export default OTP
