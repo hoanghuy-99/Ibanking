@@ -27,8 +27,11 @@ const Router = () => {
 
     return (
         <BrowserRouter>
-            {!loggedIn && <Redirect push to='/login'/>}
+            {!getToken() && <Redirect to="/login"/>}
             <Switch>
+                <Route path="/login">
+                    <Login/>
+                </Route>
                 <Route path="/transfer">
                     <Header/>
                     <Transaction/>
@@ -44,9 +47,6 @@ const Router = () => {
                 <Route path="/home">
                     <Header/>
                     <Home/>
-                </Route>
-                <Route path="/">
-                    <Login/>
                 </Route>
             </Switch>
         </BrowserRouter>

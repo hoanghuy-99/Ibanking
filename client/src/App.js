@@ -7,6 +7,8 @@ import Router from './Router';
 import {makeTransaction} from './redux/actions/transaction.js'
 import {fetchDebtByStudentId} from './redux/actions/debt.js'
 import TransactionConstants from './redux/constants/transaction';
+import { getToken } from './cookie';
+import { Redirect } from 'react-router';
 const store = configureStore()
 function App() {
   
