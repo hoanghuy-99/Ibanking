@@ -41,6 +41,7 @@ const TransactionService = require('../services/transaction')
                                 name: tran.debt.student.name,
                                 id: tran.debt.student.id
                             },
+                            description: debt.description,
                             amount: tran.debt.amount
                         }
                     }
@@ -91,6 +92,7 @@ async function getTransactions(req, res){
                 id: t.debt.student.id,
                 name: t.debt.student.name
             },
+            description: t.debt.description,
             amount: t.debt.amount
         })
     });

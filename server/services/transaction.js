@@ -31,9 +31,11 @@ class TransactionService{
 
         user.balance = balance
         user.transactions.push(tran._id)
-        console.log(user)
+        debt.isPaid = true
+
         await user.save()
         await tran.save()
+        await debt.save()
         return await TransactionModel.findById(tran._id).populate('debt')
     }
 

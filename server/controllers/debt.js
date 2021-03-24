@@ -13,6 +13,7 @@ module.exports.apiGetDebtByStudentId = async (req,res)=> {
                     id: debt.student.id,
                     name: debt.student.name
                 },
+                description: debt.description,
                 amount: debt.amount
             }
         })
