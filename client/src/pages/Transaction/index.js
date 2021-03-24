@@ -11,14 +11,14 @@ const Transaction = (props) =>{
     const dispatch = useDispatch()
     const [id,setId] = useState("") 
     const checkStudentId = ()=>{
-        if(id.length != 8 || debt?.student.id != id){
+        if(id.length != 8 ){
             return ""
         }
         return true
     }
     const handleChange = (e)=>{
         const student_id = e.target.value
-        if(student_id.length == 8 && debt?.student.id != student_id){
+        if(student_id.length == 8){
             dispatch(fetchDebtByStudentId(student_id))
         }
         setId(student_id)
@@ -26,12 +26,14 @@ const Transaction = (props) =>{
     const handleClick = (e)=>{
         dispatch(sendOtp())
     }
+    const [disable,setDisable] = useState("")
     const [msg,setMsg] = useState("")
     const [boo,setBoo] = useState(true)
     const checkSodu=()=>{
         if(profile?.balance !=0 && debt?.amount !=0 && profile?.balance && debt?.amount){
             if(profile?.balance < debt?.amount ){
                 setMsg("Số dư không đủ để thực hiện giao dịch")
+                setDisable("disabled-link")
                 setBoo(true)
             }
             else
@@ -90,6 +92,10 @@ const Transaction = (props) =>{
                                     <input className="form-control" type="text"  placeholder="Nhập MSSV" id="mssv"  onChange={handleChange}/>
                                 </div>
                                 <div className="form-group">
+                                    <label for="noidung">Nội dung học phí</label>
+                                    <input className="form-control" type="text"  id="noidung"  value={checkStudentId()&&debt&&debt.description} disabled/>
+                                </div>
+                                <div className="form-group">
                                     <label for="hoten">Họ và tên sinh viên</label>
                                     <input className="form-control" type="text"  id="name_sv"  value={checkStudentId()&&debt&&debt.student.name} disabled/>
                                 </div>
@@ -131,11 +137,12 @@ const Transaction = (props) =>{
                                 <h2>Xác nhận thông tin chuyển khoản</h2>
                                 <div>MSSV: <strong>{checkStudentId()&&id}</strong></div>
                                 <div>Họ và tên: <strong>{checkStudentId()&&debt&&debt.student.name}</strong></div>
+                                <div>Nội dung: <strong>{checkStudentId()&&debt&&debt.description}</strong></div>
                                 <div>Số dư tài khoản: <strong>{checkStudentId()&&profile&&profile.balance}</strong></div>
                                 <div>Số tiền cần nộp: <strong style={{color:"red"}}>{checkStudentId()&&debt&&debt.amount}</strong></div>
                                 <div>Số tiền còn trong tài khoản: <strong style={{color:"red"}}>{checkStudentId()&&msg}</strong></div>
                                 <button className="btn btn-dark m-1" onClick={closeModal}>Hủy</button>
-                                <Link to="/otp" onClick={handleClick}><button className="btn btn-danger m-1" disabled={boo}>Xác nhận</button></Link>
+                                <Link to="/otp" className={disable} onClick={handleClick}><button className="btn btn-danger m-1" disabled={boo}>Xác nhận</button></Link>
                                 </Modal>
                         </div>
                     </div>

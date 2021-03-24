@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react'; 
-import { useLocation,Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { login, logout } from '../../redux/actions/user'
+import { login } from '../../redux/actions/user'
+import { alertActions } from '../../redux/actions/alert'
 
 function Login(){
     const checkLogin = useSelector(state => state.user?.loggedIn)
+    const alert = useSelector(state => state.alert)
     const [inputs, setInputs] = useState({
         username: '',
         password: ''
     })
     const [submitted, setSubmitted] = useState(false)
     const { username, password } = inputs
-    ///const loggingIn = useSelector(state => state.authentication.loggingIn)
     const dispatch = useDispatch()
-    const location = useLocation()
     
     function handleChange(event) {
         const { name, value } = event.target
@@ -30,6 +30,11 @@ function Login(){
             dispatch(login(username, password))
         }
     }
+
+    useEffect(() => {
+        dispatch(alertActions.clear());
+    }, []);
+
     return (
         <>
         { checkLogin && <Redirect to='/home'/>}
@@ -58,6 +63,9 @@ function Login(){
                     </button>
                 </div>
             </form>
+            {alert.message &&
+                <div className={`alert ${alert.type}`}>{alert.message}</div>
+            }
         </div>
         </>
     )

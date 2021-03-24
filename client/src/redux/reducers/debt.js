@@ -10,7 +10,8 @@ export default (state = initialState, action) => {
         case DebtConstansts.FETCH_DEBT:
             return{
                 ...state,
-                requesting: true 
+                requesting: true,
+                data:undefined
             }
         case DebtConstansts.FETCH_DEBT_SUCCESS:
             return{
