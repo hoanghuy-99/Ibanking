@@ -33,7 +33,8 @@ const initialState = {
             return{
                 ...state,
                 requesting: true,
-                message: undefined
+                message: undefined,
+                isSuccess:false
             }
         case TransactionConstants.MAKE_TRANSACTION_SUCCESS:
             return{

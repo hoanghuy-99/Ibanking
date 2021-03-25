@@ -53,8 +53,7 @@ function makeTransaction(otp){
     return async (dispatch, getState) =>{
         dispatch(request())
         const state = getState()
-        console.log(state.debt?.data.id);
-        const res = requestNewTransaction(state.debt?.data.id,otp)
+        const res = await requestNewTransaction(state.debt?.data.id,otp)
         if(res.code === 0){
             dispatch(setUserBalance(res.data.user.balance))
             dispatch(success(res.data,"Successfully"))

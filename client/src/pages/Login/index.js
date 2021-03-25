@@ -3,7 +3,6 @@ import { Redirect } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { login } from '../../redux/actions/user'
 import { alertActions } from '../../redux/actions/alert'
-
 function Login(){
     const checkLogin = useSelector(state => state.user?.loggedIn)
     const alert = useSelector(state => state.alert)
@@ -63,9 +62,9 @@ function Login(){
                     </button>
                 </div>
             </form>
-            {alert.message &&
+            {/* {alert.message &&
                 <div className={`alert ${alert.type}`}>{alert.message}</div>
-            }
+            } */}
         </div>
         </>
     )
