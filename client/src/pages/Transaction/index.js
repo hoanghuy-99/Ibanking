@@ -98,16 +98,16 @@ const Transaction = (props) =>{
                                     <input className="form-control" type="text"  placeholder="Nhập MSSV" id="mssv"  onChange={handleChange}/>
                                 </div>
                                 <div className="form-group">
-                                    <label for="noidung">Nội dung học phí</label>
-                                    <input className="form-control" type="text"  id="noidung"  value={checkStudentId()&&debt&&debt.description} disabled/>
-                                </div>
-                                <div className="form-group">
                                     <label for="hoten">Họ và tên sinh viên</label>
                                     <input className="form-control" type="text"  id="name_sv"  value={checkStudentId()&&debt&&debt.student.name} disabled/>
                                 </div>
                                 <div className="form-group">
                                     <label for="user">Số tiền cần nộp</label>
                                     <input className="form-control" type="text" id="money" value="VND" value={checkStudentId()&&debt&&debt.amount} disabled/>
+                                </div>
+                                <div className="form-group">
+                                    <label for="noidung">Nội dung học phí</label>
+                                    <input className="form-control" type="text"  id="noidung"  value={checkStudentId()&&debt&&debt.description} disabled/>
                                 </div>
                             </div>
                             <div className="my-3">

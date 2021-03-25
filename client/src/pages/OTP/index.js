@@ -76,7 +76,7 @@ const OTP = (props) =>{
                                 secure
                             />
                             </div>
-                            <div hidden={hidden} style={{color:"red",fontWeight:"bold"}}>{message}</div>
+                            <div className="alert alert-danger" hidden={hidden} style={{fontWeight:"bold"}}>{message}</div>
                             <div style={{display:'flex',justifyContent:"center"}}>
                             <Link to="/transfer"><button className="btn btn-dark m-1" with>Quay lại</button></Link>
                             <ResendOTP onResendClick={handleClick} renderButton={renderButton} renderTime={renderTime}
