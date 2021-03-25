@@ -62,8 +62,9 @@ function login(username, password, from){
             const token = res.data.token
             dispatch(success(token, ''))
         } else {
-            dispatch(failure(res.message))
-            dispatch(alertActions.error(res.message))
+            const message = res.message
+            dispatch(failure(message))
+            dispatch(alertActions.error(message.toString()))
         }
     }
 }

@@ -5,6 +5,7 @@ import { login } from '../../redux/actions/user'
 import { alertActions } from '../../redux/actions/alert'
 function Login(){
     const checkLogin = useSelector(state => state.user?.loggedIn)
+    const spinner  = useSelector(state => state.user.requesting)
     const alert = useSelector(state => state.alert)
     const [inputs, setInputs] = useState({
         username: '',
@@ -58,6 +59,7 @@ function Login(){
                 </div>
                 <div className="form-group">
                     <button onClick={handleSubmit} className="btn btn-primary">
+                        {spinner && <span className="spinner-border spinner-border-sm mr-1"></span>}
                         Login
                     </button>
                 </div>
