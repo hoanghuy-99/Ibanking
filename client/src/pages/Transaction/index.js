@@ -124,7 +124,7 @@ const Transaction = (props) =>{
                         </form>
                         <div className="form-group">
                                 <Link to="/home"><button className="btn btn-dark m-1" with>Hủy</button></Link>
-                                <button onClick={OpenModal} className="btn btn-danger m-1" disabled={!checkStudentId()&&"disable"}>Thanh toán</button>
+                                <button onClick={OpenModal} className="btn btn-danger m-1" disabled={!checkStudentId()}>Thanh toán</button>
                         </div>
                         <div>
                             <Modal
