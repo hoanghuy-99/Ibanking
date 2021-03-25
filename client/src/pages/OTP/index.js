@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import OTPInput, { ResendOTP } from 'otp-input-react';
 import {useSelector,useDispatch} from 'react-redux'
 import { Link, Redirect } from 'react-router-dom';
@@ -20,17 +20,30 @@ const OTP = (props) =>{
     const handleClick = (e) =>{
         dispatch(sendOtp())
     }
+    const isSuccess = useSelector(state => state.transactions?.isSuccess)
+    const message = useSelector(state => state.transactions?.message)
+    const requesting = useSelector(state => state.transactions?.requesting)
     const conFirm = (e)=>{
-        console.log(otp)
         dispatch(makeTransaction(otp))
         setIsClick(true)
     }
-    const request = useSelector(state => state.transactions?.requesting)
-    const message = useSelector(state => state.transactions?.message)
+    var block = true
+    var hidden = true
+    const blockRedicrect = () =>{
+        if(isSuccess == false && requesting == false && isClick){
+            block = false
+            hidden = false
+            if(otp.length < 6){
+                hidden = true
+                setIsClick(false)
+            }
+            return false
+        }
+        return true
+    }
     const [isClick,setIsClick] = useState(false)
     const checkEndRequest = ()=>{
-        console.log(request,message);
-        if(request == false && message && isClick){
+        if(requesting == false && message && isClick){
             return true
         }
         return false
@@ -43,7 +56,7 @@ const OTP = (props) =>{
     }
     return(
         <>
-        {checkEndRequest() && <Redirect to="/transaction"/>}
+        {blockRedicrect() && checkEndRequest() && <Redirect to="/transaction"/>}
         <div>
            <div className="container my-3">
                 <div className="row justify-content-center">
@@ -63,6 +76,7 @@ const OTP = (props) =>{
                                 secure
                             />
                             </div>
+                            <div hidden={hidden} style={{color:"red",fontWeight:"bold"}}>{message}</div>
                             <div style={{display:'flex',justifyContent:"center"}}>
                             <Link to="/transfer"><button className="btn btn-dark m-1" with>Quay lại</button></Link>
                             <ResendOTP onResendClick={handleClick} renderButton={renderButton} renderTime={renderTime}
