@@ -64,7 +64,7 @@ function login(username, password, from){
         } else {
             const message = res.message
             dispatch(failure(message))
-            dispatch(alertActions.error(message.toString()))
+            console.log(dispatch(alertActions.error(message)))
         }
     }
 }

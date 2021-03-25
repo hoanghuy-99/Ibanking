@@ -4,7 +4,7 @@ const initialState = {
     message: undefined
 }
 
-export function alert(state = initialState, action) {
+export default function alert(state = initialState, action) {
     switch (action.type) {
         case alertConstants.SUCCESS:
             return {

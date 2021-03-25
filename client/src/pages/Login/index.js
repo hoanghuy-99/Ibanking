@@ -5,8 +5,8 @@ import { login } from '../../redux/actions/user'
 import { alertActions } from '../../redux/actions/alert'
 function Login(){
     const checkLogin = useSelector(state => state.user?.loggedIn)
-    const spinner  = useSelector(state => state.user.requesting)
-    const alert = useSelector(state => state.alert)
+    const spinner  = useSelector(state => state.user?.requesting)
+    const alert = useSelector(state => state.alert?.message)
     const [inputs, setInputs] = useState({
         username: '',
         password: ''
@@ -57,6 +57,9 @@ function Login(){
                         <div className="invalid-feedback">Password is required</div>
                     }
                 </div>
+                {alert &&
+                    <div className="alert alert-danger">{alert}</div>
+                }
                 <div className="form-group">
                     <button onClick={handleSubmit} className="btn btn-primary">
                         {spinner && <span className="spinner-border spinner-border-sm mr-1"></span>}
@@ -64,9 +67,6 @@ function Login(){
                     </button>
                 </div>
             </form>
-            {/* {alert.message &&
-                <div className={`alert ${alert.type}`}>{alert.message}</div>
-            } */}
         </div>
         </>
     )
