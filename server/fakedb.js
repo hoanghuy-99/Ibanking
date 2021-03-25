@@ -22,9 +22,9 @@ async function fakeData()
         username:'Kiet',
         hashedPassword: hashed_password,
         name:'Kiet',
-        emailAddress:'Kiet@gmail.com',
+        emailAddress:'tuankiet15021999@gmail.com',
         phone:'0909123456',
-        balance: 10000000000
+        balance: 1000000000000
     })
     const debt = new Debt({
         _id: new mongoose.Types.ObjectId(),
@@ -33,7 +33,7 @@ async function fakeData()
             name:"Đoàn Tuấn Kiệt"
         },
         description: "Học phí Học kì 2 năm học 2020-2021",
-        amount: 6969696969
+        amount: 2000000
     })
 
     const tran = new Transaction({

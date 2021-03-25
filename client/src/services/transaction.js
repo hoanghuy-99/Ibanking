@@ -10,8 +10,8 @@ async function requestTransaction(){
     const get_transaction = await response.json()
     return get_transaction
 }
-async function requestNewTransaction(debt_id,otp){
-    const data = {debt_id:debt_id,otp:otp}
+async function requestNewTransaction(otp){
+    const data = {otp:otp}
     const response = await fetch("http://localhost:8080/api/transactions",{
         method: "POST",
         headers: {
@@ -20,8 +20,7 @@ async function requestNewTransaction(debt_id,otp){
         },
         body: JSON.stringify(data)
     })
-    const post_otp = await response.json()
-    console.log(post_otp);
+    const post_otp = await response.json();
     return post_otp
 }
 export{requestTransaction,requestNewTransaction}

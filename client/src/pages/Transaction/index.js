@@ -16,6 +16,12 @@ const Transaction = (props) =>{
         }
         return true
     }
+    const checkPay = ()=>{
+        if(debt){
+            return true
+        }
+        return false
+    }
     const handleChange = (e)=>{
         const student_id = e.target.value
         if(student_id.length == 8){
@@ -24,7 +30,7 @@ const Transaction = (props) =>{
         setId(student_id)
     }
     const handleClick = (e)=>{
-        dispatch(sendOtp())
+        dispatch(sendOtp(debt?.id))
     }
     const [disable,setDisable] = useState("")
     const [msg,setMsg] = useState("")
@@ -32,8 +38,8 @@ const Transaction = (props) =>{
     const checkSodu=()=>{
         if(profile?.balance !=0 && debt?.amount !=0 && profile?.balance && debt?.amount){
             if(profile?.balance < debt?.amount ){
-                setMsg("Số dư không đủ để thực hiện giao dịch")
                 setDisable("disabled-link")
+                setMsg("Số dư không đủ để thực hiện giao dịch")
                 setBoo(true)
             }
             else
@@ -124,7 +130,7 @@ const Transaction = (props) =>{
                         </form>
                         <div className="form-group">
                                 <Link to="/home"><button className="btn btn-dark m-1" with>Hủy</button></Link>
-                                <button onClick={OpenModal} className="btn btn-danger m-1" disabled={!checkStudentId()}>Thanh toán</button>
+                                <button onClick={OpenModal} className="btn btn-danger m-1" disabled={!checkStudentId()||!checkPay()}>Thanh toán</button>
                         </div>
                         <div>
                             <Modal
