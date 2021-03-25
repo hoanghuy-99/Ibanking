@@ -2,8 +2,8 @@ import Cookie from 'js-cookie'
 import jwtDecode from 'jwt-decode'
 function setToken(token){
     let {exp} = jwtDecode(token)
-    console.log(exp)
-    const expires = exp
+    const expires = exp*1000
+    console.log(new Date(expires))
     Cookie.set('token', token, {expires: new Date(expires)})
 }
 
