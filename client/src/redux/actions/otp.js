@@ -1,6 +1,6 @@
 import otpConstants from '../constants/otp'
 import {requestNewOTP} from '../../services/otp.js'
-function sendOtp() {
+function sendOtp(id) {
     function request() {
         return { type: otpConstants.SEND_OTP }
     }
@@ -21,7 +21,7 @@ function sendOtp() {
 
     return async(dispatch) => {
         dispatch(request())
-        const res = await requestNewOTP()
+        const res = await requestNewOTP(id)
         if (res.code === 0) {
             dispatch(success(res.message, 'Successfully: Sent OTP to Email'))
         } else if (res.code === 1) {
