@@ -14,7 +14,6 @@ async function fakeData()
     await Debt.deleteMany()
     await Transaction.deleteMany()
 
-
     const hashed_password = await hasher.hash('123456')
 
     const user = new User({
