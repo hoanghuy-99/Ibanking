@@ -3,6 +3,7 @@ const otpUtil = require('../utils/otp')
 const {sendEmail} = require('../utils/email_sender')
 const {createOtpEmail} = require('../utils/email_creator')
 const UserModel = require('../models/User')
+const DebtModel = require('../models/Debt')
 
 const otpExpIn = process.env.OTP_EXP_IN
 
@@ -17,12 +18,32 @@ class OtpService{
         OUT_OF_DATE: 'OUT_OF_DATE'
     }
 
-    static async sendNewOtpToUser(user_id) {
+    static async sendNewOtpToUser(user_id, debt_id) {
         const otp = otpUtil.create()
         const user = await UserModel.findById(user_id)
+        
         if(!user){
             throw new Error('User id is not exist')
         }
+
+        if(debt_id){
+            const debt = await DebtModel.findById(debt_id)
+
+            if(!debt){
+                throw new Error('Debt id is not exist')
+            }
+            if(debt.isPaid){
+                throw new Error('Debt was paid')
+            }
+            
+            user.otp.debt_id = debt_id
+        }
+        else{
+            if(!user.otp.debt_id){
+                throw new Error('Request with debt id to send new OTP before resend')
+            }
+        }
+        
         user.otp.value = otp
         user.otp.exp = calculateOtpExp()
         await user.save()
@@ -38,21 +59,24 @@ class OtpService{
         return true
     }
 
-    static async check(otp, user_id){
+    static async use(otp, user_id){
         const user = await UserModel.findById(user_id)
         if(!user){
             throw new Error('User id is not exist')
         }
+        
+        const debt_id = user.otp.debt_id
 
         if(otp !== user.otp.value){
-            return this.OTP_STATUS.INVALID
+            return {status:this.OTP_STATUS.INVALID, debt_id}
         }
 
         if(Date.now() > user.otp.exp){
-            return this.OTP_STATUS.OUT_OF_DATE
+            return {status:this.OTP_STATUS.OUT_OF_DATE, debt_id}
         }
-
-        return this.OTP_STATUS.VALID
+        user.otp = undefined
+        user.save()
+        return {status:this.OTP_STATUS.VALID, debt_id}
     }
 }
 

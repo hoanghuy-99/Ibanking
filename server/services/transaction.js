@@ -4,6 +4,29 @@ const TransactionModel = require('../models/Transaction')
 const mongoose = require('mongoose')
 
 class TransactionService{
+    static async checkCanPay(user_id, debt_id){
+        let debt = await DebtModel.findById(debt_id)
+        if(!debt){
+            throw new Error('Debt id not exist')
+        }
+
+        if(debt.isPaid){
+            throw new Error('The debt was paid')
+        }
+
+        let user = await UserModel.findById(user_id)
+        if(!user){
+            throw new Error('User id not exist')
+        }
+
+        let balance = user.balance
+        const amount = debt.amount
+        if(balance < amount){
+            return false
+        }
+
+        return true
+    }
     static async payDebt(user_id, debt_id) {
         let debt = await DebtModel.findById(debt_id)
         if(!debt){

@@ -3,11 +3,10 @@ const UserService = require('../services/user')
 const TransactionService = require('../services/transaction')
 
  async function apiMakeTransaction(req, res){
-    const debt_id = req.body.debt_id
     const otp = req.body.otp
     const user_id = req.token.user_id
 
-    const status = await OtpService.check(otp, user_id)
+    const {status, debt_id} = await OtpService.use(otp, user_id)
 
     const OTP_STATUS = OtpService.OTP_STATUS
     let tran = undefined
@@ -18,16 +17,13 @@ const TransactionService = require('../services/transaction')
             }catch(e){
                 return res.json({
                     code: 1,
-                    message: e
+                    message: e.message
                 })
             }
-            console.log(tran)
             if(tran)
             {
                 let user = await UserService.getById(user_id)
                 const balance = user.balance
-                console.log(user)
-                console.log(tran)
                 return res.json({
                     code: 0,
                     data: {
@@ -41,7 +37,7 @@ const TransactionService = require('../services/transaction')
                                 name: tran.debt.student.name,
                                 id: tran.debt.student.id
                             },
-                            description: debt.description,
+                            description: tran.debt.description,
                             amount: tran.debt.amount
                         }
                     }

@@ -1,7 +1,9 @@
 import Cookie from 'js-cookie'
-
+import jwtDecode from 'jwt-decode'
 function setToken(token){
-    const expires = Date.now() + 5*60*1000
+    let {exp} = jwtDecode(token)
+    console.log(exp)
+    const expires = exp
     Cookie.set('token', token, {expires: new Date(expires)})
 }
 
