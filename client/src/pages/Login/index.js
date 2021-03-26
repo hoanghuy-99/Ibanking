@@ -57,7 +57,7 @@ function Login(){
                         <div className="invalid-feedback">Password is required</div>
                     }
                 </div>
-                {alert &&
+                {submitted && alert &&
                     <div className="alert alert-danger">{alert}</div>
                 }
                 <div className="form-group">
