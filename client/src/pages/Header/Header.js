@@ -1,15 +1,15 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from "react-router-dom";
-import {logout} from '../../redux/actions/user'
+import { logout } from '../../redux/actions/user'
 
-const Header = (props) =>{
+const Header = (props) => {
     const profile = useSelector(state => state.user?.profile)
     const dispatch = useDispatch()
-    const handleClick = (event) =>{
+    const handleClick = (event) => {
         dispatch(logout())
     }
-    return (
+    return ( 
         <div>
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
                 <div className="container-fluid">
