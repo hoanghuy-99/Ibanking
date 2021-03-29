@@ -12,7 +12,7 @@ const block = (action)=> (req, res, next)=>{
     }
 }
 
-let isRunning = false
+const queue = []
 
 module.exports.setUpRequestQueue = (action) => async (req, res, next) => {
     console.log('new block:'+req.params.num)
