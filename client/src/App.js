@@ -6,28 +6,16 @@ import configureStore from './redux/store'
 import Router from './Router';
 import {makeTransaction} from './redux/actions/transaction.js'
 import {fetchDebtByStudentId} from './redux/actions/debt.js'
-import {fetchUser} from './redux/actions/user.js'
 import TransactionConstants from './redux/constants/transaction';
+import { getToken } from './cookie';
+import { Redirect } from 'react-router';
 const store = configureStore()
-
-function Demo(){
-  const dispatch = useDispatch()
-  useEffect(()=>{
-    dispatch(fetchUser())
-  },[])
-  return (
-    <>
-      <Router/>
-    </>
-  )
-}
-
 function App() {
   
   return (
     <div>
       <Provider store ={store}>
-        <Demo></Demo>
+        <Router/>
       </Provider>
     </div>
   );

@@ -3,6 +3,7 @@ import {useSelector,useDispatch} from 'react-redux'
 import Modal from 'react-modal';
 import { Link } from 'react-router-dom';
 import {fetchDebtByStudentId} from '../../redux/actions/debt.js'
+import {sendOtp} from '../../redux/actions/otp.js'
 
 const Transaction = (props) =>{
     const profile = useSelector(state => state.user?.profile)
@@ -10,23 +11,44 @@ const Transaction = (props) =>{
     const dispatch = useDispatch()
     const [id,setId] = useState("") 
     const checkStudentId = ()=>{
-        if(id.length != 8 || debt?.student.id != id){
+        if(id.length != 8 ){
             return ""
         }
         return true
     }
+    const checkPay = ()=>{
+        if(debt){
+            return true
+        }
+        return false
+    }
     const handleChange = (e)=>{
         const student_id = e.target.value
-        if(student_id.length == 8 && debt?.student.id != student_id){
+        if(student_id.length == 8){
             dispatch(fetchDebtByStudentId(student_id))
         }
         setId(student_id)
     }
+    const handleClick = (e)=>{
+        dispatch(sendOtp(debt?.id))
+    }
+    const [disable,setDisable] = useState("")
+    const [msg,setMsg] = useState("")
+    const [boo,setBoo] = useState(true)
     const checkSodu=()=>{
-        if(profile?.balance !=0 && debt?.amount !=0){
-            return profile?.balance - debt?.amount
+        if(profile?.balance !=0 && debt?.amount !=0 && profile?.balance && debt?.amount){
+            if(profile?.balance < debt?.amount ){
+                setDisable("disabled-link")
+                setMsg("Số dư không đủ để thực hiện giao dịch")
+                setBoo(true)
+            }
+            else
+            {
+                setBoo(false)
+                setMsg( profile?.balance - debt?.amount)
+            }
+            
         }
-        return "Không có dữ liệu"
     }
     const customStyles = {
         content : {
@@ -46,6 +68,7 @@ const Transaction = (props) =>{
     }
     function OpenModal(){
         setIsOpen(true)
+        checkSodu()
     }
     return(
         <div>
@@ -82,6 +105,10 @@ const Transaction = (props) =>{
                                     <label for="user">Số tiền cần nộp</label>
                                     <input className="form-control" type="text" id="money" value="VND" value={checkStudentId()&&debt&&debt.amount} disabled/>
                                 </div>
+                                <div className="form-group">
+                                    <label for="noidung">Nội dung học phí</label>
+                                    <input className="form-control" type="text"  id="noidung"  value={checkStudentId()&&debt&&debt.description} disabled/>
+                                </div>
                             </div>
                             <div className="my-3">
                                 <h4>Thông tin thanh toán</h4>
@@ -103,7 +130,7 @@ const Transaction = (props) =>{
                         </form>
                         <div className="form-group">
                                 <Link to="/home"><button className="btn btn-dark m-1" with>Hủy</button></Link>
-                                <button onClick={OpenModal} className="btn btn-danger m-1" disabled={!checkStudentId()&&"disable"}>Thanh toán</button>
+                                <button onClick={OpenModal} className="btn btn-danger m-1" disabled={!checkStudentId()||!checkPay()}>Thanh toán</button>
                         </div>
                         <div>
                             <Modal
@@ -116,11 +143,12 @@ const Transaction = (props) =>{
                                 <h2>Xác nhận thông tin chuyển khoản</h2>
                                 <div>MSSV: <strong>{checkStudentId()&&id}</strong></div>
                                 <div>Họ và tên: <strong>{checkStudentId()&&debt&&debt.student.name}</strong></div>
+                                <div>Nội dung: <strong>{checkStudentId()&&debt&&debt.description}</strong></div>
                                 <div>Số dư tài khoản: <strong>{checkStudentId()&&profile&&profile.balance}</strong></div>
                                 <div>Số tiền cần nộp: <strong style={{color:"red"}}>{checkStudentId()&&debt&&debt.amount}</strong></div>
-                                <div>Số tiền còn trong tài khoản: <strong>{checkStudentId()&&checkSodu()}</strong></div>
+                                <div>Số tiền còn trong tài khoản: <strong style={{color:"red"}}>{checkStudentId()&&msg}</strong></div>
                                 <button className="btn btn-dark m-1" onClick={closeModal}>Hủy</button>
-                                <Link to="/otp"><button className="btn btn-danger m-1">Xác nhận</button></Link>
+                                <Link to="/otp" className={disable} onClick={handleClick}><button className="btn btn-danger m-1" disabled={boo}>Xác nhận</button></Link>
                                 </Modal>
                         </div>
                     </div>

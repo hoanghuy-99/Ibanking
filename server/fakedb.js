@@ -14,17 +14,25 @@ async function fakeData()
     await Debt.deleteMany()
     await Transaction.deleteMany()
 
-
     const hashed_password = await hasher.hash('123456')
 
     const user = new User({
         _id: new mongoose.Types.ObjectId(),
-        username:'Kiet',
+        username:'tuankiet1502',
         hashedPassword: hashed_password,
         name:'Kiet',
-        emailAddress:'Kiet@gmail.com',
+        emailAddress:'tuankiet15021999@gmail.com',
         phone:'0909123456',
-        balance: 10000000000
+        balance: 1000000000000
+    })
+    const user2 = new User({
+        _id: new mongoose.Types.ObjectId(),
+        username:'hoanghuy',
+        hashedPassword: hashed_password,
+        name:'Vũ Hoàng Huy',
+        emailAddress:'vuhoanghuy29101999@gmail.com',
+        phone:'0909123456',
+        balance: 1000000000000
     })
     const debt = new Debt({
         _id: new mongoose.Types.ObjectId(),
@@ -32,23 +40,32 @@ async function fakeData()
             id: "51702125",
             name:"Đoàn Tuấn Kiệt"
         },
-        amount: 6969696969
+        description: "Học phí Học kì 2 năm học 2020-2021",
+        amount: 2000000
     })
-
-    const tran = new Transaction({
+    const debt2 = new Debt({
         _id: new mongoose.Types.ObjectId(),
-        debt: debt._id,
-        user: user._id
+        student:{
+            id: "51702036",
+            name:"Dương Hữu Nguyên"
+        },
+        description: "Tiền bảo hiểm y tế năm 2020-2021",
+        amount: 50000000
     })
-    user.transactions.push(tran._id)
-    const docs = [user, debt, tran]
+    const debt3 = new Debt({
+        _id: new mongoose.Types.ObjectId(),
+        student:{
+            id: "51702117",
+            name:"Vũ Hoàng Huy"
+        },
+        description: "Tiền rớt môn",
+        amount: 100000000
+    })
+    const docs = [user,user2,debt,debt2,debt3]
     for(let i = 0; i < docs.length; i++ )
     {   
         await docs[i].save()
     }
-    const trans = await Transaction.find({user:user._id}).populate('debt')
-    
-    console.log(trans)
 }
 fakeData().then(()=>{
     console.log('Fake data were created')

@@ -1,26 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'; 
+import { Redirect } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { login, logout } from '../../redux/actions/user'
-
+import { login } from '../../redux/actions/user'
+import { alertActions } from '../../redux/actions/alert'
 function Login(){
+    const checkLogin = useSelector(state => state.user?.loggedIn)
+    const spinner  = useSelector(state => state.user?.requesting)
+    const alert = useSelector(state => state.alert?.message)
     const [inputs, setInputs] = useState({
         username: '',
         password: ''
     })
     const [submitted, setSubmitted] = useState(false)
     const { username, password } = inputs
-    const loggingIn = useSelector(state => state.authentication.loggingIn)
     const dispatch = useDispatch()
-    const location = useLocation()
-    useEffect(()=>{
-        console.log(inputs)
-    }, [inputs])
-    
-    // reset
-    useEffect(() =>{
-        dispatch(logout())
-    }, [])
     
     function handleChange(event) {
         const { name, value } = event.target
@@ -34,13 +27,18 @@ function Login(){
         event.preventDefault()
         setSubmitted(true)
         if(username && password) {
-            const { from } = location.state || { from: { pathname: '/home' } }
-            dispatch(login(username, password, from))
+            dispatch(login(username, password))
         }
     }
 
+    useEffect(() => {
+        dispatch(alertActions.clear());
+    }, []);
+
     return (
-        <div className="container">
+        <>
+        { checkLogin && <Redirect to='/home'/>}
+        <div className="container" style={{ margin: "5% 13%" }}>
             <center>
                 <h1>LOGIN</h1>
             </center>
@@ -59,14 +57,18 @@ function Login(){
                         <div className="invalid-feedback">Password is required</div>
                     }
                 </div>
+                {submitted && alert &&
+                    <div className="alert alert-danger">{alert}</div>
+                }
                 <div className="form-group">
-                    <button className="btn btn-primary">
-                        {loggingIn && <span className="spinner-border spinner-border-sm mr-1"></span>}
+                    <button onClick={handleSubmit} className="btn btn-primary">
+                        {spinner && <span className="spinner-border spinner-border-sm mr-1"></span>}
                         Login
                     </button>
                 </div>
             </form>
         </div>
+        </>
     )
 }
 

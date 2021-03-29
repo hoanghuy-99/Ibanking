@@ -1,6 +1,6 @@
 import TransactionConstants from "../constants/transaction.js"
 import {setUserBalance} from "../actions/user.js"
-import {requestNewTransaction} from "../../services/transaction.js"
+import {requestNewTransaction,requestTransaction} from "../../services/transaction.js"
 function fetchTransactions(){
     function request(){
         return {type: TransactionConstants.FETCH_TRANSACTION}
@@ -22,13 +22,13 @@ function fetchTransactions(){
     }
     return async(dispatch) => {
         dispatch(request())
-        /*const res = await requestTransaction()
+        const res = await requestTransaction()
         if(res.code === 0){
-            dispatch(success(res.data,'Load data successfully'))
+            dispatch(success(res.data.transactions,'Load data successfully'))
         }
         else{
             dispatch(failure('Fail to load data'))
-        }*/
+        }
         
     }
 }
@@ -53,13 +53,16 @@ function makeTransaction(otp){
     return async (dispatch, getState) =>{
         dispatch(request())
         const state = getState()
-        const res = requestNewTransaction(state.debt.data.id,otp)
+        const res = await requestNewTransaction(otp)
         if(res.code === 0){
             dispatch(setUserBalance(res.data.user.balance))
             dispatch(success(res.data,"Successfully"))
         }
+        else if(res.code === 10){
+            dispatch(failure("OTP không hợp lệ"))
+        }
         else{
-            dispatch(failure("Can't make transaction"))
+            dispatch(failure("OTP hết hạn"))
         }
     }
 }

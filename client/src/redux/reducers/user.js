@@ -1,5 +1,7 @@
 import userConstants from '../constants/user'
 
+import {setToken, getToken} from '../../cookie'
+
 const initialState = {
     loggedIn: false,
     requesting: false,
@@ -32,15 +34,14 @@ export default (state = initialState, action) => {
         case userConstants.LOGIN:
             return{
                 ...state,
-                loggedIn: true,
                 requesting: true
             }
         case userConstants.LOGIN_SUCCESS:
+            setToken(action.token)
             return{
                 ...state,
                 loggedIn: true,
                 requesting: false,
-                tokens: action.tokens,
                 message: action.message
             }
         case userConstants.LOGIN_FAILURE:
@@ -48,7 +49,7 @@ export default (state = initialState, action) => {
                 ...state,
                 loggedIn: false,
                 requesting: false,
-                tokens: undefined,
+                token: undefined,
                 message: action.message
             }
         case userConstants.LOGOUT:
@@ -65,6 +66,14 @@ export default (state = initialState, action) => {
                     balance: action.balance
                 }
             }
+        case userConstants.CHECK_LOGIN:
+            if(getToken()){
+                return {
+                    ...state,
+                    loggedIn: true
+                }
+            }
+            return state
         default:
             return state
     }

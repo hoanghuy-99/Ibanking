@@ -10,6 +10,7 @@ const userSchema = new mongoose.Schema({
     balance: Number,
     otp:{
         value: String,
+        debt_id: mongoose.Types.ObjectId,
         exp: Number
     },
     transactions: [{ type: mongoose.Types.ObjectId, ref:'Transaction' }]

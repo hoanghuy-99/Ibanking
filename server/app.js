@@ -28,12 +28,18 @@ const long_task = (num) => new Promise((resolve, reject)=>{
 const {setUpRequestQueue} = require('./middlewares/queue')
 
 const action = async (req, res)=>{
+    console.log(req.params.ids)
     console.log('in running action num: ', req.params.num)
     await long_task(req.params.num)
     console.log('result:'+req.params.num)
     res.send(req.params.num)
 }
-app.get('/demo/:num', setUpRequestQueue(action))
+
+const idOfRequest = (req)=> {
+    return req.params.id
+}
+
+app.get('/demo/:id/:num', setUpRequestQueue(action, idOfRequest))
 
 //Router
 const apiRouter = require('./routers/root')

@@ -2,33 +2,28 @@ const OtpService = require('../services/otp')
 const UserService = require('../services/user')
 const TransactionService = require('../services/transaction')
 
-function makeTransaction(req, res){
-    const debt_id = req.body.debt_id
+ async function apiMakeTransaction(req, res){
     const otp = req.body.otp
     const user_id = req.token.user_id
 
-    const status = OtpService.check(otp, user_id)
+    const {status, debt_id} = await OtpService.use(otp, user_id)
 
     const OTP_STATUS = OtpService.OTP_STATUS
-
+    let tran = undefined
     switch(status){
         case OTP_STATUS.VALID:
             try{
-                const canPay = await TransactionService.payDebt(user_id, debt_id)
+                tran = await TransactionService.payDebt(user_id, debt_id)
             }catch(e){
                 return res.json({
                     code: 1,
-                    message: e
+                    message: e.message
                 })
             }
-            
-            if(canPay)
+            if(tran)
             {
-                let user = await UserService.getById(user_id).populate('transactions')
+                let user = await UserService.getById(user_id)
                 const balance = user.balance
-                const tran = user.transactions.find((t)=>{
-                    return t.debt_id === debt_id
-                })
                 return res.json({
                     code: 0,
                     data: {
@@ -39,10 +34,11 @@ function makeTransaction(req, res){
                             id: tran._id,
                             time: tran.time,
                             student:{
-                                name: tran.student.name,
-                                id: tran.student.id
+                                name: tran.debt.student.name,
+                                id: tran.debt.student.id
                             },
-                            amount: tran.amount
+                            description: tran.debt.description,
+                            amount: tran.debt.amount
                         }
                     }
                 })
@@ -69,7 +65,7 @@ function makeTransaction(req, res){
 
 }
 
-async function getTransactions(req, res){
+async function apiGetTransactions(req, res){
     const user_id = req.token.user_id
     let trans
     try{
@@ -92,6 +88,7 @@ async function getTransactions(req, res){
                 id: t.debt.student.id,
                 name: t.debt.student.name
             },
+            description: t.debt.description,
             amount: t.debt.amount
         })
     });
@@ -106,6 +103,6 @@ async function getTransactions(req, res){
 }
 
 module.exports = {
-    makeTransaction,
-    getTransactions
+    apiGetTransactions,
+    apiMakeTransaction
 }

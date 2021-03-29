@@ -6,7 +6,9 @@ const debtSchema = new mongoose.Schema({
         id: String,
         name: String,
     },
-    amount: Number
+    description: String,
+    amount: Number,
+    isPaid: { type:Boolean, default: false }
 })
 
 module.exports = mongoose.model('Debt', debtSchema)
