@@ -25,14 +25,14 @@ const Transaction = (props) =>{
         return false
     }
     const checkError = ()=>{
-        if(message){
+        if(message&&id.length == 8){
             hidden = false
         }
-        if(id.length<8){
-            message = ""
+        else{
             hidden = true
         }
     }
+    checkError()
     const handleChange = (e)=>{
         const student_id = e.target.value
         if(student_id.length == 8){
@@ -41,7 +41,6 @@ const Transaction = (props) =>{
        
         setId(student_id)
     }
-    checkError()
     console.log(message);
     const handleClick = (e)=>{
         dispatch(sendOtp(debt?.id))
