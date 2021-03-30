@@ -21,10 +21,10 @@ function fetchDebtByStudentId(student_id){
         dispatch(request())
         const res = await requestDebt(student_id)
         if(res.code === 0){
-            dispatch(success(res.data,'Load data successfully'))
+            dispatch(success(res.data,''))
         }
         else{
-            dispatch(failure("Fail to load data"))
+            dispatch(failure("Không có nợ học phí!"))
         }
     }
 }

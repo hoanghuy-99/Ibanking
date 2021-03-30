@@ -10,6 +10,8 @@ const Transaction = (props) =>{
     const debt = useSelector(state => state.debt?.data)
     const dispatch = useDispatch()
     const [id,setId] = useState("") 
+    var message = useSelector(state => state.debt?.message)
+    var hidden = true
     const checkStudentId = ()=>{
         if(id.length != 8 ){
             return ""
@@ -22,13 +24,25 @@ const Transaction = (props) =>{
         }
         return false
     }
+    const checkError = ()=>{
+        if(message){
+            hidden = false
+        }
+        if(id.length<8){
+            message = ""
+            hidden = true
+        }
+    }
     const handleChange = (e)=>{
         const student_id = e.target.value
         if(student_id.length == 8){
             dispatch(fetchDebtByStudentId(student_id))
         }
+       
         setId(student_id)
     }
+    checkError()
+    console.log(message);
     const handleClick = (e)=>{
         dispatch(sendOtp(debt?.id))
     }
@@ -97,6 +111,7 @@ const Transaction = (props) =>{
                                     <label for="mssv">Mã số sinh viên</label>
                                     <input className="form-control" type="text"  placeholder="Nhập MSSV" id="mssv"  onChange={handleChange}/>
                                 </div>
+                                <div className="alert alert-danger" hidden={hidden}>{message}</div>
                                 <div className="form-group">
                                     <label for="hoten">Họ và tên sinh viên</label>
                                     <input className="form-control" type="text"  id="name_sv"  value={checkStudentId()&&debt&&debt.student.name} disabled/>
