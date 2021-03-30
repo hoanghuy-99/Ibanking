@@ -21,7 +21,7 @@ module.exports.apiGetDebtByStudentId = async (req,res)=> {
     else{
         res.json({
             code: 1,
-            message: "Student_id not exist!"
+            message: "Don't have debt"
         })
     }
 }
