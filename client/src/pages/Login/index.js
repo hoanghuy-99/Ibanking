@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { login } from '../../redux/actions/user'
-import { alertActions } from '../../redux/actions/alert'
 function Login(){
     const checkLogin = useSelector(state => state.user?.loggedIn)
     const spinner  = useSelector(state => state.user?.requesting)
@@ -31,13 +30,9 @@ function Login(){
         }
     }
 
-    useEffect(() => {
-        dispatch(alertActions.clear());
-    }, []);
-
     return (
         <>
-        { checkLogin && <Redirect to='/home'/>}
+        {checkLogin && <Redirect to='/home'/>}
         <div className="container" style={{ margin: "5% 13%" }}>
             <center>
                 <h1>LOGIN</h1>
