@@ -80,7 +80,7 @@ const OTP = (props) =>{
                             <div style={{display:'flex',justifyContent:"center"}}>
                             <Link to="/transfer"><button className="btn btn-dark m-1" with>Quay lại</button></Link>
                             <ResendOTP onResendClick={handleClick} renderButton={renderButton} renderTime={renderTime}
-                                maxTime={10}
+                                maxTime={60}
                             />
                             <button onClick={conFirm} className="btn btn-danger m-1" disabled={checkOTP()}>Xác nhận </button>
                             </div>
