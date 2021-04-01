@@ -31,8 +31,6 @@ module.exports.setUpRequestQueue = (action, createIdFromReq) =>{
         }
         eventEmitter.on('requestQueue', block)
 
+        
     }
 }
-
-//
-    
