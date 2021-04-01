@@ -19,7 +19,7 @@ app.use(morgan('tiny'))
 //app.use(helmet())
 app.use(express.json())
 
-const long_task = (num) => new Promise((resolve, reject)=>{
+const async_long_task = (num) => new Promise((resolve, reject)=>{
     setTimeout(()=>{
         resolve(num)
     },num*1000)
@@ -27,10 +27,11 @@ const long_task = (num) => new Promise((resolve, reject)=>{
 
 const {setUpRequestQueue} = require('./middlewares/queue')
 
+//Demo 2 request trùng nhau
 const action = async (req, res)=>{
     console.log(req.params.ids)
     console.log('in running action num: ', req.params.num)
-    await long_task(req.params.num)
+    await async_long_task(req.params.num)
     console.log('result:'+req.params.num)
     res.send(req.params.num)
 }
