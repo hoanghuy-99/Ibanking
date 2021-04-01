@@ -1,0 +1,21 @@
+{
+  "name": "Ibanking",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "server":"cd server && node fakedb.js && npm start",
+    "client":"cd client && npm start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hoanghuy-99/Ibanking.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hoanghuy-99/Ibanking/issues"
+  },
+  "homepage": "https://github.com/hoanghuy-99/Ibanking#readme"
+}

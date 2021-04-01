@@ -29,4 +29,4 @@ async function sendEmail({ receiver, subject, text, html }) {
 	return result;
 }
 
-module.exports = {sendEmail};
+module.exports = { sendEmail };

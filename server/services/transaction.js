@@ -1,6 +1,8 @@
 const UserModel = require('../models/User')
 const DebtModel = require('../models/Debt')
 const TransactionModel = require('../models/Transaction')
+const { createTransactionEmail } = require('../utils/email_creator')
+const { sendEmail } = require('../utils/email_sender')
 const mongoose = require('mongoose')
 
 class TransactionService{
@@ -63,6 +65,20 @@ class TransactionService{
         await user.save()
         await tran.save()
         await debt.save()
+
+        const emailAddress = user.emailAddress
+
+        const content_params = {
+            name: user.name,
+            student_id: debt.student.id,
+            student_name: debt.student.name,
+            description: debt.description,
+            amount: debt.amount,
+            balance
+        }
+
+        await sendEmail(createTransactionEmail(emailAddress, content_params))
+
         return await TransactionModel.findById(tran._id).populate('debt')
     }
 

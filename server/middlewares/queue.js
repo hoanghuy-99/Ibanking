@@ -1,5 +1,6 @@
 const EventEmitter = require('events');
 
+
 module.exports.setUpRequestQueue = (action, createIdFromReq) =>{
     const eventEmitter = new EventEmitter()
     const runningList = []
@@ -31,6 +32,8 @@ module.exports.setUpRequestQueue = (action, createIdFromReq) =>{
         }
         eventEmitter.on('requestQueue', block)
 
-        
     }
 }
+
+//
+    
