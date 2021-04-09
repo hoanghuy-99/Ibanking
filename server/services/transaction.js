@@ -77,7 +77,7 @@ class TransactionService{
             balance
         }
 
-        await sendEmail(createTransactionEmail(emailAddress, content_params))
+        sendEmail(createTransactionEmail(emailAddress, content_params))
 
         return await TransactionModel.findById(tran._id).populate('debt')
     }

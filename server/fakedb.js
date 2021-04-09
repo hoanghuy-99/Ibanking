@@ -21,7 +21,7 @@ async function fakeData()
         username:'tuankiet1502',
         hashedPassword: hashed_password,
         name:'Kiet',
-        emailAddress:'tuankiet15021999@gmail.com',
+        emailAddress:'huunguyen199999@gmail.com',
         phone:'0909123456',
         balance: 1000000000000
     })

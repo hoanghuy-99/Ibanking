@@ -4,6 +4,7 @@ import Modal from 'react-modal';
 import { Link } from 'react-router-dom';
 import {fetchDebtByStudentId} from '../../redux/actions/debt.js'
 import {sendOtp} from '../../redux/actions/otp.js'
+import { formatMoney } from '../../showMoney.js';
 
 const Transaction = (props) =>{
     const profile = useSelector(state => state.user?.profile)
@@ -117,7 +118,7 @@ const Transaction = (props) =>{
                                 </div>
                                 <div className="form-group">
                                     <label for="user">Số tiền cần nộp</label>
-                                    <input className="form-control" type="text" id="money" value="VND" value={checkStudentId()&&debt&&debt.amount} disabled/>
+                                    <input className="form-control" type="text" id="money" value="VND" value={checkStudentId()&&debt&&formatMoney(debt.amount)} disabled/>
                                 </div>
                                 <div className="form-group">
                                     <label for="noidung">Nội dung học phí</label>
@@ -128,11 +129,11 @@ const Transaction = (props) =>{
                                 <h4>Thông tin thanh toán</h4>
                                 <div className="form-group">
                                     <label for="sodu">Số dư tài khỏan</label>
-                                    <input className="form-control" type="text"  id="sodu" value={profile&&profile.balance} disabled/>
+                                    <input className="form-control" type="text"  id="sodu" value={profile&&formatMoney(profile.balance)} disabled/>
                                 </div>
                                 <div className="form-group">
                                     <label for="tiennop">Số tiền cần nộp</label>
-                                    <input className="form-control" type="text"  id="tiennop"  value={checkStudentId()&&debt&&debt.amount} disabled/>
+                                    <input className="form-control" type="text"  id="tiennop"  value={checkStudentId()&&debt&&formatMoney(debt.amount)} disabled/>
                                 </div>
                                 <div className="form-group">
                                     <label for="user">Thỏa thuận&Điều khoản</label>
@@ -158,9 +159,9 @@ const Transaction = (props) =>{
                                 <div>MSSV: <strong>{checkStudentId()&&id}</strong></div>
                                 <div>Họ và tên: <strong>{checkStudentId()&&debt&&debt.student.name}</strong></div>
                                 <div>Nội dung: <strong>{checkStudentId()&&debt&&debt.description}</strong></div>
-                                <div>Số dư tài khoản: <strong>{checkStudentId()&&profile&&profile.balance}</strong></div>
-                                <div>Số tiền cần nộp: <strong style={{color:"red"}}>{checkStudentId()&&debt&&debt.amount}</strong></div>
-                                <div>Số tiền còn trong tài khoản: <strong style={{color:"red"}}>{checkStudentId()&&msg}</strong></div>
+                                <div>Số dư tài khoản: <strong>{checkStudentId()&&profile&&formatMoney(profile.balance)}</strong></div>
+                                <div>Số tiền cần nộp: <strong style={{color:"red"}}>{checkStudentId()&&debt&&formatMoney(debt.amount)}</strong></div>
+                                <div>Số tiền còn trong tài khoản: <strong style={{color:"red"}}>{checkStudentId()&&formatMoney(msg)}</strong></div>
                                 <button className="btn btn-dark m-1" onClick={closeModal}>Hủy</button>
                                 <Link to="/otp" className={disable} onClick={handleClick}><button className="btn btn-danger m-1" disabled={boo}>Xác nhận</button></Link>
                                 </Modal>

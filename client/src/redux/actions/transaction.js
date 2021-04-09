@@ -61,6 +61,9 @@ function makeTransaction(otp){
         else if(res.code === 10){
             dispatch(failure("OTP không hợp lệ"))
         }
+        else if(res.code === 1){
+            dispatch(failure("Học phí đã được đóng"))
+        }
         else{
             dispatch(failure("OTP hết hạn"))
         }

@@ -15,6 +15,10 @@ function createOtpEmail (receiver, name, otp){
     }
 }
 
+const formatMoney = (num)=>{
+    return Intl.NumberFormat('vn-VN', {style: 'currency', currency:'VND'}).format(num)
+}
+
 
 function createTransactionEmail(receiver, content_params ){
     return {
@@ -28,8 +32,8 @@ function createTransactionEmail(receiver, content_params ){
             <div>Mã số sinh viên: ${content_params.student_id}</div>
             <div>Tên sinh viên: ${content_params.student_name}</div>
             <div>Nội dung học phí: ${content_params.description}</div>
-            <div>Số tiền đóng: ${content_params.amount}</div>
-            <div>Số tiền còn lại: ${content_params.balance}</div>
+            <div>Số tiền đóng: ${formatMoney(content_params.amount)}</div>
+            <div>Số tiền còn lại: ${formatMoney(content_params.balance)}</div>
             </div>
         `,
     }

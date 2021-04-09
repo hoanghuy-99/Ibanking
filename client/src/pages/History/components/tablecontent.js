@@ -1,6 +1,8 @@
 import React, {useState,useEffect} from 'react';
 import {useSelector,useDispatch} from 'react-redux'
 import {fetchTransactions} from '../../../redux/actions/transaction'
+import {formatMoney} from '../../../showMoney'
+
 const TableContent = (props) =>{
     const dispatch = useDispatch()
     useEffect(()=>{
@@ -34,7 +36,7 @@ const TableContent = (props) =>{
                 <td>{value.student.name}</td>
                 <td>{printTime(value.time)}</td>
                 <td>{value.description}</td>
-                <td style={{color: "red"}}>-{value.amount}VND</td>
+                <td style={{color: "red"}}>- {formatMoney(value.amount)}</td>
             </tr>)
         })}
         </>
